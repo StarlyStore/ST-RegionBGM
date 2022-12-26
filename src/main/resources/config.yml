@@ -24,11 +24,23 @@ edit_gui_settings:
   title: '구역브금 편집기'
   size: 3
 
+  # 구역브금 편집기 GUI - 브금 상태
+  status:
+    material: JUKEBOX
+    name: '&2&l>> &a브금 상태 &2&l<<'
+    slot: 10
+    lore:
+      - ''
+      - '&e&l➥ &f&l우클릭시 브금을 켭니다! '
+      - '&e&l➥ &f&l좌클릭시 브금을 끕니다! '
+      - ''
+
+
   # 구역브금 편집기 GUI - 브금 길이
   length:
     material: CLOCK
     name: '&e&l>> &f브금 길이 &e&l<<'
-    slot: 11
+    slot: 12
     lore:
       - ''
       - '&e&l➥ &f&l현재 브금 길이: &e%length%'
@@ -40,7 +52,7 @@ edit_gui_settings:
   volume:
     material: NOTE_BLOCK
     name: '&e&l>> &f브금 볼륨 &e&l<<'
-    slot: 12
+    slot: 13
     lore:
       - ''
       - '&e&l➥ &f&l현재 브금 볼륨: &e%volume%'
@@ -53,7 +65,7 @@ edit_gui_settings:
   pitch:
     material: NOTE_BLOCK
     name: '&e&l>> &f브금 높낮이 &e&l<<'
-    slot: 13
+    slot: 14
     lore:
       - ''
       - '&e&l➥ &f&l현재 브금 높낮이: &e%pitch%'
@@ -64,14 +76,29 @@ edit_gui_settings:
 
   # 구역브금 편집기 GUI - 브금 반복
   loop:
-    material: CLOCK
-    name: '&e&l>> &f브금 반복 &e&l<<'
-    slot: 14
-    lore:
-      - ''
-      - '&e&l➥ &f&l현재 브금 반복: &e%loop%'
-      - ''
-      - '&e&l➥ &f&l클릭시 브금 반복을 true/false 합니다.'
-      - ''
+
+    # 반복이 켜져있을 때
+    true:
+      material: GREEN_WOOL
+      name: '&2&l>> &a브금 반복 &2&l<<'
+      slot: 16
+      lore:
+        - ''
+        - '&e&l➥ &f&l현재 브금 반복: &aON'
+        - ''
+        - '&e&l➥ &f&l좌클릭시 브금 반복을 끕니다.'
+        - ''
+
+    # 반복이 꺼져있을 때
+    false:
+      material: CLOCK
+      name: '&e&l>> &f브금 반복 &e&l<<'
+      slot: 15
+      lore:
+        - ''
+        - '&e&l➥ &f&l현재 브금 반복: &e%loop%'
+        - ''
+        - '&e&l➥ &f&l클릭시 브금 반복을 true/false 합니다.'
+        - ''
 
 
