@@ -22,6 +22,7 @@ public class BgmTabComplete implements TabCompleter {
         List<String> completions = new ArrayList<>();
 
         if(sender instanceof Player player) {
+
             if(args.length == 1) {
                 StringUtil.copyPartialMatches(args[0], List.of("생성"), completions);
             } else if (args.length == 2) {

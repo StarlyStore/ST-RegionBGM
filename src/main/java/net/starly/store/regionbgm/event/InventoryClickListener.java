@@ -20,7 +20,7 @@ public class InventoryClickListener implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         Config config = new Config("config", plugin);
-        if(event.getView().getTitle().equals(config.getConfig().getString("gui_settings.title"))) {
+        if(event.getView().getTitle().equals(config.getConfig().getString("toggled_gui_settings.title"))) {
             event.setCancelled(true);
             player.closeInventory();
 

@@ -33,7 +33,7 @@ public class ToggleObj {
         Config toggled = new Config("config", plugin);
 
         Inventory inv = Bukkit.createInventory(null,
-                toggled.getConfig().getInt("toggled_toggled_gui_settings.size") * 9, toggled.getConfig().getString("toggled_toggled_gui_settings.title"));
+                toggled.getConfig().getInt("toggled_gui_settings.size") * 9, toggled.getConfig().getString("toggled_gui_settings.title"));
 
 
         Config data = new Config("data/" + player.getUniqueId(), plugin);

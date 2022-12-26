@@ -2,6 +2,7 @@ package net.starly.store.regionbgm.data;
 
 import net.starly.core.data.Config;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -47,10 +48,10 @@ public class RegionBGMGuiEditorObj {
     private void lengthEditor(Inventory inv) {
         Config config = new Config("config", plugin);
 
-        String name = config.getConfig().getString("edit_gui_settings.length_editor.name");
-        String material = config.getConfig().getString("edit_gui_settings.length_editor.material");
-        List<String> lore = config.getConfig().getStringList("edit_gui_settings.length_editor.lore");
-        int slot = config.getConfig().getInt("edit_gui_settings.length_editor.slot");
+        String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.length.name"));
+        String material = config.getConfig().getString("edit_gui_settings.length.material");
+        List<String> lore =  Translate.color(config.getConfig().getStringList("edit_gui_settings.length.lore"));
+        int slot = config.getConfig().getInt("edit_gui_settings.length.slot");
 
         ItemStack item = new ItemStack(Material.valueOf(material));
         ItemMeta meta = item.getItemMeta();
@@ -69,10 +70,10 @@ public class RegionBGMGuiEditorObj {
     private void volumeEditor(Inventory inv) {
         Config config = new Config("config", plugin);
 
-        String name = config.getConfig().getString("edit_gui_settings.volume_editor.name");
-        String material = config.getConfig().getString("edit_gui_settings.volume_editor.material");
-        List<String> lore = config.getConfig().getStringList("edit_gui_settings.volume_editor.lore");
-        int slot = config.getConfig().getInt("edit_gui_settings.volume_editor.slot");
+        String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.volume.name"));
+        String material = config.getConfig().getString("edit_gui_settings.volume.material");
+        List<String> lore =  Translate.color(config.getConfig().getStringList("edit_gui_settings.volume.lore"));
+        int slot = config.getConfig().getInt("edit_gui_settings.volume.slot");
 
         ItemStack item = new ItemStack(Material.valueOf(material));
         ItemMeta meta = item.getItemMeta();
@@ -91,10 +92,10 @@ public class RegionBGMGuiEditorObj {
     private void pitchEditor(Inventory inv) {
         Config config = new Config("config", plugin);
 
-        String name = config.getConfig().getString("edit_gui_settings.pitch_editor.name");
-        String material = config.getConfig().getString("edit_gui_settings.pitch_editor.material");
-        List<String> lore = config.getConfig().getStringList("edit_gui_settings.pitch_editor.lore");
-        int slot = config.getConfig().getInt("edit_gui_settings.pitch_editor.slot");
+        String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.pitch.name"));
+        String material = config.getConfig().getString("edit_gui_settings.pitch.material");
+        List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.pitch.lore"));
+        int slot = config.getConfig().getInt("edit_gui_settings.pitch.slot");
 
         ItemStack item = new ItemStack(Material.valueOf(material));
         ItemMeta meta = item.getItemMeta();
@@ -113,10 +114,10 @@ public class RegionBGMGuiEditorObj {
     private void loopEditor(Inventory inv) {
         Config config = new Config("config", plugin);
 
-        String name = config.getConfig().getString("edit_gui_settings.loop_editor.name");
-        String material = config.getConfig().getString("edit_gui_settings.loop_editor.material");
-        List<String> lore = config.getConfig().getStringList("edit_gui_settings.loop_editor.lore");
-        int slot = config.getConfig().getInt("edit_gui_settings.loop_editor.slot");
+        String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.loop.name"));
+        String material = config.getConfig().getString("edit_gui_settings.loop.material");
+        List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.loop.lore"));
+        int slot = config.getConfig().getInt("edit_gui_settings.loop.slot");
 
         ItemStack item = new ItemStack(Material.valueOf(material));
         ItemMeta meta = item.getItemMeta();

@@ -6,6 +6,8 @@ import net.starly.store.regionbgm.commands.ToggleCmd;
 import net.starly.store.regionbgm.commands.tabcomplete.BgmTabComplete;
 import net.starly.store.regionbgm.event.InventoryClickListener;
 import net.starly.store.regionbgm.event.PlayerJoinListener;
+import net.starly.store.regionbgm.event.RegionEnterListener;
+import net.starly.store.regionbgm.event.RegionLeaveListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,6 +32,8 @@ public class RegionBGM extends JavaPlugin {
         // EVENT
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
+        Bukkit.getPluginManager().registerEvents(new RegionEnterListener(), this);
+        Bukkit.getPluginManager().registerEvents(new RegionLeaveListener(), this);
 
         // COMMAND
         Bukkit.getPluginCommand("bgm").setExecutor(new ToggleCmd());

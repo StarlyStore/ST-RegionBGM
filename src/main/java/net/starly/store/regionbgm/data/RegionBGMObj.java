@@ -22,7 +22,7 @@ public class RegionBGMObj {
     public void createPlayerData() {
         Config data = new Config("data/" + player.getUniqueId(), plugin);
 
-        if(!data.isFileExist()) {
+        if (!data.isFileExist()) {
             data.setBoolean("toggle", true);
         }
     }
@@ -30,37 +30,51 @@ public class RegionBGMObj {
 
     /**
      * 구역브금을 생성합니다.
+     *
      * @param region 구역 이름
-     * @param bgm 브금 이름
+     * @param bgmName    브금 이름
      * @param length 브금 길이
      * @param volume 브금 불륨
-     * @param pitch 브금 높낮이
-     * @param loop 브금 반복 여부
+     * @param pitch  브금 높낮이
+     * @param loop   브금 반복 여부
      */
-    public void createRegionBGM(String region, String bgm, Integer length, Integer volume, Integer pitch, Boolean loop) {
-        Config config = new Config("bgm/" + region, plugin);
-        ConfigurationSection section = config.getConfig().getConfigurationSection(region);
+    public void createRegionBGM(String region, String bgmName, Integer length, Integer volume, Integer pitch, Boolean loop) {
+        Config config = new Config("bgm", plugin);
+        config.loadDefaultConfig();
 
-        if(section == null) {
-            section.getConfigurationSection("bgm").set(region + ".bgm", bgm);
-            section.getConfigurationSection("bgm").set(region + ".length", length);
-            section.getConfigurationSection("bgm").set(region + ".volume", volume);
-            section.getConfigurationSection("bgm").set(region + ".pitch", pitch);
-            section.getConfigurationSection("bgm").set(region + ".loop", loop);
+        ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + region);
+
+        if (section == null) { //섹션이 없다면
+            config.getConfig().createSection("bgm." + region); //섹션 만듬
+            section = config.getConfig().getConfigurationSection("bgm." + region); //섹션 다시 불러옴
+
+            section.set("bgm", bgmName);
+            section.set("length", length);
+            section.set("volume", volume);
+            section.set("pitch", pitch);
+            section.set("loop", loop);
         }
+
+        config.saveConfig();
     }
 
 
     /**
      * 구역브금을 삭제합니다.
+     *
      * @param region 구역 이름
      */
     public void removeRegionBGM(String region) {
         Config config = new Config("bgm/" + region, plugin);
         ConfigurationSection section = config.getConfig().getConfigurationSection(region);
 
-        if(section != null) {
+        if (section != null) {
             config.getConfig().set(region, null);
         }
+    }
+
+
+    public void createBGM(String music) {
+
     }
 }
