@@ -12,6 +12,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
+import static net.starly.store.regionbgm.RegionBGM.plugin;
+
 public class ToggleObj {
 
 
@@ -28,13 +30,13 @@ public class ToggleObj {
      * 토글 GUI를 엽니다.
      */
     public void toggleGUI() {
-        Config toggled = new Config("config", RegionBGM.plugin);
+        Config toggled = new Config("config", plugin);
 
         Inventory inv = Bukkit.createInventory(null,
-                toggled.getConfig().getInt("gui_settings.size") * 9, toggled.getConfig().getString("gui_settings.title"));
+                toggled.getConfig().getInt("toggled_toggled_gui_settings.size") * 9, toggled.getConfig().getString("toggled_toggled_gui_settings.title"));
 
 
-        Config data = new Config("data/" + player.getUniqueId(), RegionBGM.plugin);
+        Config data = new Config("data/" + player.getUniqueId(), plugin);
 
         if(!data.getBoolean("toggle")) {
             onToggled(inv);
@@ -49,12 +51,12 @@ public class ToggleObj {
      * 플레이어의 토글이 켜져있을 때
      */
     private void onToggled(Inventory inv) {
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", plugin);
 
-        String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("gui_settings.toggled_on.name"));
-        String material = config.getConfig().getString("gui_settings.toggled_on.material");
-        List<String> lore = Translate.color(config.getConfig().getStringList("gui_settings.toggled_on.lore"));
-        int slot = config.getConfig().getInt("gui_settings.toggled_on.slot");
+        String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("toggled_gui_settings.toggled_on.name"));
+        String material = config.getConfig().getString("toggled_gui_settings.toggled_on.material");
+        List<String> lore = Translate.color(config.getConfig().getStringList("toggled_gui_settings.toggled_on.lore"));
+        int slot = config.getConfig().getInt("toggled_gui_settings.toggled_on.slot");
 
         setItem(inv, name, material, lore, slot);
     }
@@ -64,12 +66,12 @@ public class ToggleObj {
      * 플레이어의 토글이 꺼져있을 때
      */
     private void offToggled(Inventory inv) {
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", plugin);
 
-        String name =  ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("gui_settings.toggled_off.name"));
-        String material = config.getConfig().getString("gui_settings.toggled_off.material");
-        List<String> lore = Translate.color(config.getConfig().getStringList("gui_settings.toggled_off.lore"));
-        int slot = config.getConfig().getInt("gui_settings.toggled_off.slot");
+        String name =  ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("toggled_gui_settings.toggled_off.name"));
+        String material = config.getConfig().getString("toggled_gui_settings.toggled_off.material");
+        List<String> lore = Translate.color(config.getConfig().getStringList("toggled_gui_settings.toggled_off.lore"));
+        int slot = config.getConfig().getInt("toggled_gui_settings.toggled_off.slot");
 
         setItem(inv, name, material, lore, slot);
     }

@@ -37,6 +37,6 @@ dependencies {
 
 }
 
-jar {
-    destinationDirectory.set(file('C:\\Users\\Yangd\\대영\\마인크래프트\\서버\\마인크래프트\\개발용\\1.19.2\\plugins'))
-}
+//jar {
+//    destinationDirectory.set(file('C:\\Users\\Yangd\\대영\\마인크래프트\\서버\\마인크래프트\\개발용\\1.19.2\\plugins'))
+//}

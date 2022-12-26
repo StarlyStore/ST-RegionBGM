@@ -1,0 +1,166 @@
+package net.starly.store.regionbgm.data;
+
+import net.starly.core.data.Config;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
+
+import static net.starly.store.regionbgm.RegionBGM.plugin;
+import static net.starly.store.regionbgm.data.RegionMapData.guiEditorMap;
+
+public class RegionBGMGuiEditorObj {
+
+    private Player player;
+
+
+    public RegionBGMGuiEditorObj(Player player) { this.player = player; }
+
+
+    /**
+     * 구역브금 편집기를 엽니다.
+     */
+    public void openBGMEditor(String region) {
+        Config config = new Config("config", plugin);
+        Inventory inv = Bukkit.createInventory(null,
+                config.getConfig().getInt("edit_gui_settings.size") * 9,
+                config.getConfig().getString("edit_gui_settings.title") + " " + region);
+
+        lengthEditor(inv);
+        volumeEditor(inv);
+        pitchEditor(inv);
+        loopEditor(inv);
+
+        player.openInventory(inv);
+    }
+
+
+    /**
+     * 구역브금 편집기 - 브금 길이
+     * @param inv 편집기 인벤토리
+     */
+    private void lengthEditor(Inventory inv) {
+        Config config = new Config("config", plugin);
+
+        String name = config.getConfig().getString("edit_gui_settings.length_editor.name");
+        String material = config.getConfig().getString("edit_gui_settings.length_editor.material");
+        List<String> lore = config.getConfig().getStringList("edit_gui_settings.length_editor.lore");
+        int slot = config.getConfig().getInt("edit_gui_settings.length_editor.slot");
+
+        ItemStack item = new ItemStack(Material.valueOf(material));
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        setItem(inv, name, material, lore, slot);
+    }
+
+
+    /**
+     * 구역브금 편집기 - 브금 불륨
+     * @param inv 편집기 인벤토리
+     */
+    private void volumeEditor(Inventory inv) {
+        Config config = new Config("config", plugin);
+
+        String name = config.getConfig().getString("edit_gui_settings.volume_editor.name");
+        String material = config.getConfig().getString("edit_gui_settings.volume_editor.material");
+        List<String> lore = config.getConfig().getStringList("edit_gui_settings.volume_editor.lore");
+        int slot = config.getConfig().getInt("edit_gui_settings.volume_editor.slot");
+
+        ItemStack item = new ItemStack(Material.valueOf(material));
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        setItem(inv, name, material, lore, slot);
+    }
+
+
+    /**
+     * 구역브금 편집기 - 브금 높낮이
+     * @param inv 편집기 인벤토리
+     */
+    private void pitchEditor(Inventory inv) {
+        Config config = new Config("config", plugin);
+
+        String name = config.getConfig().getString("edit_gui_settings.pitch_editor.name");
+        String material = config.getConfig().getString("edit_gui_settings.pitch_editor.material");
+        List<String> lore = config.getConfig().getStringList("edit_gui_settings.pitch_editor.lore");
+        int slot = config.getConfig().getInt("edit_gui_settings.pitch_editor.slot");
+
+        ItemStack item = new ItemStack(Material.valueOf(material));
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        setItem(inv, name, material, lore, slot);
+    }
+
+
+    /**
+     * 구역브금 편집기 - 브금 반복 여부
+     * @param inv 편집기 인벤토리
+     */
+    private void loopEditor(Inventory inv) {
+        Config config = new Config("config", plugin);
+
+        String name = config.getConfig().getString("edit_gui_settings.loop_editor.name");
+        String material = config.getConfig().getString("edit_gui_settings.loop_editor.material");
+        List<String> lore = config.getConfig().getStringList("edit_gui_settings.loop_editor.lore");
+        int slot = config.getConfig().getInt("edit_gui_settings.loop_editor.slot");
+
+        ItemStack item = new ItemStack(Material.valueOf(material));
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        setItem(inv, name, material, lore, slot);
+    }
+    
+    
+    /**
+     * ItemStack을 저장합니다.
+     * @param inv 인벤토리
+     * @param name 아이템 이름
+     * @param material 아이템 종류
+     * @param lore 아이템 로어
+     * @param slot 아이템 슬롯
+     */
+    private void setItem(Inventory inv, String name, String material, List<String> lore, int slot) {
+
+        ItemStack itemStack = new ItemStack(Material.valueOf(material));
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(name);
+        itemMeta.setLore(lore);
+        itemStack.setItemMeta(itemMeta);
+        inv.setItem(slot, itemStack);
+    }
+    
+
+    /**
+     * 구역브금 길이를 편집합니다
+     * @param event 플레이어가 채팅을 입력했을 때 발생하는 이벤트
+     */
+    public void editBGMLength(AsyncPlayerChatEvent event) {
+
+        String message = event.getMessage();
+
+        if(guiEditorMap.containsKey(player)) {
+            if(guiEditorMap.get(player) == GuiEditor.LENGTH) {
+                event.setCancelled(true);
+                player.sendMessage("§a구역브금 길이를 " + message + "초로 설정했습니다.");
+                guiEditorMap.remove(player);
+            }
+        }
+    }
+}

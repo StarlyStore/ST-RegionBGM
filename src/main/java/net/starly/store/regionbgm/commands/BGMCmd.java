@@ -1,5 +1,6 @@
 package net.starly.store.regionbgm.commands;
 
+import net.starly.store.regionbgm.data.RegionBGMGuiEditorObj;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +13,11 @@ public class BGMCmd implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
 
+
         if(sender instanceof Player player) {
+
+            RegionBGMGuiEditorObj bgmEditor = new RegionBGMGuiEditorObj(player);
+
             if(args.length == 0) {
                 return true;
             }
@@ -29,6 +34,11 @@ public class BGMCmd implements CommandExecutor {
 
                     return true;
 
+                }
+
+                case "편집", "편집기", "editor" -> {
+                    String region = args[1];
+                    bgmEditor.openBGMEditor(region);
                 }
             }
         }

@@ -1,4 +1,5 @@
-gui_settings:
+# 토글 GUI
+toggled_gui_settings:
   title: 'ON/OFF'
   size: 3
   toggled_on:
@@ -17,3 +18,60 @@ gui_settings:
       - ''
       - '&e&l➥ &f&l좌클릭시 브금을 끕니다! '
       - ''
+
+# 구역브금 편집기 GUI
+edit_gui_settings:
+  title: '구역브금 편집기'
+  size: 3
+
+  # 구역브금 편집기 GUI - 브금 길이
+  length:
+    material: CLOCK
+    name: '&e&l>> &f브금 길이 &e&l<<'
+    slot: 11
+    lore:
+      - ''
+      - '&e&l➥ &f&l현재 브금 길이: &e%length%'
+      - ''
+      - '&e&l➥ &f&l클릭시 브금 길이를 설정합니다.'
+      - ''
+
+  # 구역브금 편집기 GUI - 브금 볼륨
+  volume:
+    material: NOTE_BLOCK
+    name: '&e&l>> &f브금 볼륨 &e&l<<'
+    slot: 12
+    lore:
+      - ''
+      - '&e&l➥ &f&l현재 브금 볼륨: &e%volume%'
+      - ''
+      - '&e&l➥ &f&l우클릭시 브금 볼륨을 0.1만큼 늘립니다.'
+      - '&e&l➥ &f&l좌클릭시 브금 볼륨을 0.1만큼 줄입니다.'
+      - ''
+
+  # 구역브금 편집기 GUI - 브금 높낮이
+  pitch:
+    material: NOTE_BLOCK
+    name: '&e&l>> &f브금 높낮이 &e&l<<'
+    slot: 13
+    lore:
+      - ''
+      - '&e&l➥ &f&l현재 브금 높낮이: &e%pitch%'
+      - ''
+      - '&e&l➥ &f&l우클릭시 브금 높낮이를 0.1만큼 늘립니다.'
+      - '&e&l➥ &f&l좌클릭시 브금 높낮이를 0.1만큼 줄입니다.'
+      - ''
+
+  # 구역브금 편집기 GUI - 브금 반복
+  loop:
+    material: CLOCK
+    name: '&e&l>> &f브금 반복 &e&l<<'
+    slot: 14
+    lore:
+      - ''
+      - '&e&l➥ &f&l현재 브금 반복: &e%loop%'
+      - ''
+      - '&e&l➥ &f&l클릭시 브금 반복을 true/false 합니다.'
+      - ''
+
+
