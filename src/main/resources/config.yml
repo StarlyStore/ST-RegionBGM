@@ -4,7 +4,7 @@ toggled_gui_settings:
   size: 3
   toggled_on:
     material: LIME_WOOL
-    name: '&2&l>> &a브금 켜기 &2&l<<'
+    name: '&2&l[ &a브금 켜기 &2&l]'
     slot: 13
     lore:
       - ''
@@ -26,66 +26,72 @@ edit_gui_settings:
 
   # 구역브금 편집기 GUI - 브금 상태
   status:
-    material: PAPER
-    name: '&e&l>> &f구역브금 상태 &e&l<<'
+    material: JUKEBOX
+    name: '&6[ {region} 구역의 브금 정보 ]'
     slot: 10
     lore:
       - ''
-      - '&e&l➥ &f&l현재 구역브금 상태: &e&l%status%'
-      - ''
-      - '&e&l➥ &f&l우클릭시 구역브금을 &a&l켭니다! '
-      - '&e&l➥ &f&l좌클릭시 구역브금을 &c&l끕니다! '
+      - '&6[ 브금 ] : &f{bgm} '
+      - '&6[ 재생시간 ] : &f{length} '
+      - '&6[ 볼륨 ] : &f{volume} '
+      - '&6[ 높낮이 ] : &f{pitch} '
+      - '&6[ 반복상태 ] : &f{loop} '
       - ''
 
   # 구역브금 편집기 GUI - 브금 이름
   bgmName:
     material: OAK_SIGN
-    name: '&e&l>> &f구역브금 이름 &e&l<<'
+    name: '&6[ 사용중인 브금 ]'
     slot: 12
     lore:
       - ''
-      - '&e&l➥ &f&l현재 구역브금 이름: &e&l%bgmName%'
+      - '&6[ 브금 ] : &f{bgm}'
       - ''
-      - '&e&l➥ &f&l우클릭시 구역브금 이름을 &a&l변경합니다! '
-      - '&e&l➥ &f&l좌클릭시 구역브금 이름을 &c&l초기화합니다! '
+      - '&e➥ &f아이템을 클릭시 브금을 변경합니다! '
       - ''
 
   # 구역브금 편집기 GUI - 브금 길이
   length:
-    material: CLOCK
-    name: '&e&l>> &f브금 길이 &e&l<<'
+    material: STRING
+    name: '&6[ 브금 재생시간 ]'
     slot: 13
     lore:
       - ''
-      - '&e&l➥ &f&l현재 브금 길이: &e%length%'
+      - '&6[ 재생시간 ] : &f{length}'
       - ''
-      - '&e&l➥ &f&l클릭시 브금 길이를 설정합니다.'
+      - '&e➥ &f아이템을 클릭시 브금 재생시간을 변경합니다! '
       - ''
 
   # 구역브금 편집기 GUI - 브금 볼륨
   volume:
-    material: NOTE_BLOCK
-    name: '&e&l>> &f브금 볼륨 &e&l<<'
+    material: SLIME_BALL
+    name: '&6[ 브금 불륨 ]'
     slot: 14
     lore:
       - ''
-      - '&e&l➥ &f&l현재 브금 볼륨: &e%volume%'
+      - '&6[ 불륨 ] : &f{volume}'
       - ''
-      - '&e&l➥ &f&l우클릭시 브금 볼륨을 0.1만큼 늘립니다.'
-      - '&e&l➥ &f&l좌클릭시 브금 볼륨을 0.1만큼 줄입니다.'
+      - '&e➥ &f아이템을 좌클릭시 브금 불륨을 0.1을 올립니다! '
+      - '&e➥ &f아이템을 우클릭시 브금 불륨을 0.1을 내립니다! '
+      - ''
+      - '&e➥ &f아이템을 쉬프트 + 좌클릭시 브금 불륨을 1.0을 올립니다! '
+      - '&e➥ &f아이템을 쉬프트 + 우클릭시 브금 불륨을 1.0을 내립니다! '
       - ''
 
   # 구역브금 편집기 GUI - 브금 높낮이
   pitch:
-    material: NOTE_BLOCK
-    name: '&e&l>> &f브금 높낮이 &e&l<<'
+    material: TRIPWIRE_HOOK
+    name: '&6[ 브금 높낮이 ]'
     slot: 15
     lore:
       - ''
-      - '&e&l➥ &f&l현재 브금 높낮이: &e%pitch%'
+      - '&6[ 높낮이 ] : &f{pitch}'
       - ''
-      - '&e&l➥ &f&l우클릭시 브금 높낮이를 0.1만큼 늘립니다.'
-      - '&e&l➥ &f&l좌클릭시 브금 높낮이를 0.1만큼 줄입니다.'
+      - '&e➥ &f아이템을 좌클릭시 브금 높낮이을 0.1을 올립니다! '
+      - '&e➥ &f아이템을 우클릭시 브금 높낮이을 0.1을 내립니다! '
+      - ''
+      - '&e➥ &f아이템을 쉬프트 + 좌클릭시 브금 높낮이을 1.0을 올립니다! '
+      - '&e➥ &f아이템을 쉬프트 + 우클릭시 브금 높낮이을 1.0을 내립니다! '
       - ''
 
   # 구역브금 편집기 GUI - 브금 반복
@@ -93,26 +99,26 @@ edit_gui_settings:
 
     # 구역브금 편집기 GUI - 브금 반복 - 끄기
     true:
-      material: LIME_WOOL
-      name: '&2&l>> &a브금 반복 &2&l<<'
+      material: LIME_DYE
+      name: '&6[ 브금 반복 ]'
       slot: 16
       lore:
         - ''
-        - '&e&l➥ &f&l현재 브금 반복: &a&lON'
+        - '&6[ 반복 상태 ] : &aON '
         - ''
-        - '&e&l➥ &f&l우클릭시 브금 반복을 &c&lOFF &f&l로 설정합니다.'
+        - '&e➥ &f아이템을 클릭시 브금을 반복시키지 않습니다! '
         - ''
 
     # 구역브금 편집기 GUI - 브금 반복 - 켜기
     false:
-      material: RED_WOOL
-      name: '&4&l>> &c브금 반복 &4&l<<'
+      material: GRAY_DYE
+      name: '&6[ 브금 반복 ]'
       slot: 16
       lore:
         - ''
-        - '&e&l➥ &f&l현재 브금 반복: &c&lOFF'
+        - '&6[ 반복 상태 ] : &cOFF '
         - ''
-        - '&e&l➥ &f&l좌클릭시 브금 반복을 &a&lON &f&l로 설정합니다.'
+        - '&e➥ &f아이템을 클릭시 브금을 반복시킵니다! '
         - ''
 
 

@@ -5,12 +5,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class AsyncPlayerChatListener implements Listener {
 
 
     @EventHandler
-    public void editBGMLength(AsyncPlayerChatEvent event) {
+    public void editBGMLength(@NotNull AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         RegionBGMGuiEditorObj regionBGMGuiEditorObj = new RegionBGMGuiEditorObj(player);
 
@@ -20,7 +21,7 @@ public class AsyncPlayerChatListener implements Listener {
 
 
     @EventHandler
-    public void editBGMName(AsyncPlayerChatEvent event) {
+    public void editBGMName(@NotNull AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
         RegionBGMGuiEditorObj regionBGMGuiEditorObj = new RegionBGMGuiEditorObj(player);

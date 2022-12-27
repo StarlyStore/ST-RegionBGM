@@ -1,7 +1,6 @@
 package net.starly.store.regionbgm.data;
 
 import net.starly.core.data.Config;
-import net.starly.region.api.RegionAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import static net.starly.store.regionbgm.RegionBGM.plugin;
