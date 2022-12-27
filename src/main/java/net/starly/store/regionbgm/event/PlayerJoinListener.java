@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class PlayerJoinListener implements Listener {
 
@@ -14,7 +15,7 @@ public class PlayerJoinListener implements Listener {
      * @param event PlayerJoinEvent
      */
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
+    public void onJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
         RegionBGMObj regionBGMObj = new RegionBGMObj(player);
         regionBGMObj.createPlayerData();

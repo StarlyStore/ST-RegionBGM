@@ -14,7 +14,16 @@ public class AsyncPlayerChatListener implements Listener {
         Player player = event.getPlayer();
         RegionBGMGuiEditorObj regionBGMGuiEditorObj = new RegionBGMGuiEditorObj(player);
 
-        regionBGMGuiEditorObj.editBGMLength(event);
+        regionBGMGuiEditorObj.changeBGMLength(event);
 
+    }
+
+
+    @EventHandler
+    public void editBGMName(AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+
+        RegionBGMGuiEditorObj regionBGMGuiEditorObj = new RegionBGMGuiEditorObj(player);
+        regionBGMGuiEditorObj.changeBGM(event);
     }
 }

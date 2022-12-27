@@ -26,21 +26,35 @@ edit_gui_settings:
 
   # 구역브금 편집기 GUI - 브금 상태
   status:
-    material: JUKEBOX
-    name: '&2&l>> &a브금 상태 &2&l<<'
+    material: PAPER
+    name: '&e&l>> &f구역브금 상태 &e&l<<'
     slot: 10
     lore:
       - ''
-      - '&e&l➥ &f&l우클릭시 브금을 켭니다! '
-      - '&e&l➥ &f&l좌클릭시 브금을 끕니다! '
+      - '&e&l➥ &f&l현재 구역브금 상태: &e&l%status%'
+      - ''
+      - '&e&l➥ &f&l우클릭시 구역브금을 &a&l켭니다! '
+      - '&e&l➥ &f&l좌클릭시 구역브금을 &c&l끕니다! '
       - ''
 
+  # 구역브금 편집기 GUI - 브금 이름
+  bgmName:
+    material: OAK_SIGN
+    name: '&e&l>> &f구역브금 이름 &e&l<<'
+    slot: 12
+    lore:
+      - ''
+      - '&e&l➥ &f&l현재 구역브금 이름: &e&l%bgmName%'
+      - ''
+      - '&e&l➥ &f&l우클릭시 구역브금 이름을 &a&l변경합니다! '
+      - '&e&l➥ &f&l좌클릭시 구역브금 이름을 &c&l초기화합니다! '
+      - ''
 
   # 구역브금 편집기 GUI - 브금 길이
   length:
     material: CLOCK
     name: '&e&l>> &f브금 길이 &e&l<<'
-    slot: 12
+    slot: 13
     lore:
       - ''
       - '&e&l➥ &f&l현재 브금 길이: &e%length%'
@@ -52,7 +66,7 @@ edit_gui_settings:
   volume:
     material: NOTE_BLOCK
     name: '&e&l>> &f브금 볼륨 &e&l<<'
-    slot: 13
+    slot: 14
     lore:
       - ''
       - '&e&l➥ &f&l현재 브금 볼륨: &e%volume%'
@@ -65,7 +79,7 @@ edit_gui_settings:
   pitch:
     material: NOTE_BLOCK
     name: '&e&l>> &f브금 높낮이 &e&l<<'
-    slot: 14
+    slot: 15
     lore:
       - ''
       - '&e&l➥ &f&l현재 브금 높낮이: &e%pitch%'
@@ -77,28 +91,28 @@ edit_gui_settings:
   # 구역브금 편집기 GUI - 브금 반복
   loop:
 
-    # 반복이 켜져있을 때
+    # 구역브금 편집기 GUI - 브금 반복 - 끄기
     true:
-      material: GREEN_WOOL
+      material: LIME_WOOL
       name: '&2&l>> &a브금 반복 &2&l<<'
       slot: 16
       lore:
         - ''
-        - '&e&l➥ &f&l현재 브금 반복: &aON'
+        - '&e&l➥ &f&l현재 브금 반복: &a&lON'
         - ''
-        - '&e&l➥ &f&l좌클릭시 브금 반복을 끕니다.'
+        - '&e&l➥ &f&l우클릭시 브금 반복을 &c&lOFF &f&l로 설정합니다.'
         - ''
 
-    # 반복이 꺼져있을 때
+    # 구역브금 편집기 GUI - 브금 반복 - 켜기
     false:
-      material: CLOCK
-      name: '&e&l>> &f브금 반복 &e&l<<'
-      slot: 15
+      material: RED_WOOL
+      name: '&4&l>> &c브금 반복 &4&l<<'
+      slot: 16
       lore:
         - ''
-        - '&e&l➥ &f&l현재 브금 반복: &e%loop%'
+        - '&e&l➥ &f&l현재 브금 반복: &c&lOFF'
         - ''
-        - '&e&l➥ &f&l클릭시 브금 반복을 true/false 합니다.'
+        - '&e&l➥ &f&l좌클릭시 브금 반복을 &a&lON &f&l로 설정합니다.'
         - ''
 
 

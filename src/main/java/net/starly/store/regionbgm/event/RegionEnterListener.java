@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import static net.starly.store.regionbgm.RegionBGM.plugin;
 import static net.starly.store.regionbgm.data.RegionMapData.taskIdMap;
@@ -15,8 +16,12 @@ import static net.starly.store.regionbgm.data.RegionMapData.taskIdMap;
 public class RegionEnterListener implements Listener {
 
 
+    /**
+     * 플레이어가 구역에 들어갔을 때 구역브금을 재생합니다.
+     * @param event RegionEnterEvent
+     */
     @EventHandler
-    public void onEntered(RegionEnterEvent event) {
+    public void onEntered(@NotNull RegionEnterEvent event) {
         Player player = event.getPlayer();
         Config data = new Config("data/" + player.getUniqueId(), plugin);
         data.loadDefaultConfig();
