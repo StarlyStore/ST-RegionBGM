@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
+import static net.starly.store.regionbgm.RegionBGM.messageConfig;
 import static net.starly.store.regionbgm.RegionBGM.plugin;
 import static net.starly.store.regionbgm.data.RegionMapData.*;
 
@@ -32,10 +33,13 @@ public class InventoryClickListener implements Listener {
                 player.closeInventory();
 
                 Config data = new Config("data/" + player.getUniqueId(), plugin);
+
                 if (data.getBoolean("toggle")) {
                     data.setBoolean("toggle", false);
+                    player.sendMessage(messageConfig.getMessage("messages.toggled_off"));
                 } else {
                     data.setBoolean("toggle", true);
+                    player.sendMessage(messageConfig.getMessage("messages.toggled_on"));
                 }
             }
             event.setCancelled(true);

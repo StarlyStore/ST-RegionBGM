@@ -10,13 +10,14 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 import static net.starly.store.regionbgm.RegionBGM.plugin;
-import static net.starly.store.regionbgm.data.RegionMapData.taskIdMap;
+import static net.starly.store.regionbgm.data.RegionMapData.*;
 
 public class RegionLeaveListener implements Listener {
 
 
     /**
      * 플레이어가 구역에서 나갔을 때 구역브금을 멈춥니다.
+     *
      * @param event RegionLeaveEvent
      */
     @EventHandler
@@ -27,15 +28,17 @@ public class RegionLeaveListener implements Listener {
         config.loadDefaultConfig();
         ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + event.getName());
 
+
         if (section != null) {
             String name = event.getName();
 
+
             player.stopSound(config.getConfig().getString("bgm." + name + ".bgm"));
 
-            if (taskIdMap.containsKey(name)) {
-                Bukkit.getScheduler().cancelTask(taskIdMap.get(name).get(player));
-                taskIdMap.remove(player);
-            }
+            if (!taskIdMap.containsKey(name)) return;
+
+            Bukkit.getScheduler().cancelTask(taskIdMap.get(name).getB());
+            taskIdMap.remove(name);
         }
     }
 }

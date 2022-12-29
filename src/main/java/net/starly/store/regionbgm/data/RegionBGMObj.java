@@ -70,6 +70,8 @@ public class RegionBGMObj {
 
         if (section != null) {
             config.getConfig().set(region, null);
+        } else {
+            System.out.println("존재하지 않는 구역입니다.");
         }
     }
 }

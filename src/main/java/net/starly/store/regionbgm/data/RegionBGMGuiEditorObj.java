@@ -1,11 +1,11 @@
 package net.starly.store.regionbgm.data;
 
 import net.starly.core.data.Config;
+import net.starly.core.data.util.Tuple;
 import net.starly.region.api.RegionAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -287,7 +287,10 @@ public class RegionBGMGuiEditorObj {
                 if (regionAPI.getRegion(changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
                     onlinePlayer.stopSound(section.getString("bgm"));
 
-                    if (section.getBoolean("loop")) Bukkit.getScheduler().cancelTask(taskIdMap.get(changeBgmMap.get(player)).get(onlinePlayer));
+                    if (section.getBoolean("loop")) {
+                        Bukkit.getScheduler().cancelTask(taskIdMap.get(name).getB());
+//                    Bukkit.getScheduler().cancelTask(taskIdMap.get(changeBgmMap.get(player)).get(onlinePlayer));
+                    }
                 }
             }
 
@@ -306,7 +309,8 @@ public class RegionBGMGuiEditorObj {
                                         Float.parseFloat(section.getDouble("pitch") + ""));
                             }
                         }.runTaskTimerAsynchronously(plugin, 0, section.getInt("length") * 20L).getTaskId();
-                        taskIdMap.get(changeBgmMap.get(player)).put(onlinePlayer, taskId);
+//                        taskIdMap.get(changeBgmMap.get(player)).put(onlinePlayer, taskId);
+                        taskIdMap.put(name, Tuple.of(onlinePlayer, taskId));
                     }
                 }
             }

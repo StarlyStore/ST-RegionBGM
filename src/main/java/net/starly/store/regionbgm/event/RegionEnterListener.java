@@ -1,6 +1,7 @@
 package net.starly.store.regionbgm.event;
 
 import net.starly.core.data.Config;
+import net.starly.core.data.util.Tuple;
 import net.starly.region.events.RegionEnterEvent;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ public class RegionEnterListener implements Listener {
 
     /**
      * 플레이어가 구역에 들어갔을 때 구역브금을 재생합니다.
+     *
      * @param event RegionEnterEvent
      */
     @EventHandler
@@ -45,10 +47,13 @@ public class RegionEnterListener implements Listener {
             };
 
             if (config.getBoolean("bgm." + name + ".loop")) {
+
                 int taskId = task.runTaskTimerAsynchronously(plugin, 0, config.getInt("bgm." + name + ".length") * 20).getTaskId();
-                taskIdMap.get(name).put(player, taskId);
+                taskIdMap.put(name, Tuple.of(player, taskId));
+
+
             } else {
-                task.run();
+                task.runTaskAsynchronously(plugin);
             }
         }
     }

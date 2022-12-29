@@ -46,6 +46,12 @@ public class BGMCmd implements CommandExecutor {
                     return true;
                 }
 
+                case "제거", "삭제", "remove", "delete" -> {
+                    String region = args[1];
+                    regionBGMObj.removeRegionBGM(region);
+                    return true;
+                }
+
             }
         }
         return false;
