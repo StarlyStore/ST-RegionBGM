@@ -1,15 +1,12 @@
 package net.starly.store.regionbgm;
 
 import net.starly.core.data.Config;
-import net.starly.core.data.MessageConfig;
 import net.starly.region.api.RegionAPI;
 import net.starly.store.regionbgm.commands.BGMCmd;
 import net.starly.store.regionbgm.commands.ToggleCmd;
 import net.starly.store.regionbgm.commands.tabcomplete.BgmTabComplete;
-import net.starly.store.regionbgm.data.RegionMapData;
 import net.starly.store.regionbgm.event.*;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,8 +19,6 @@ public class RegionBGM extends JavaPlugin {
 
 
     public static RegionBGM plugin;
-    public static MessageConfig messageConfig;
-    private static final Sound[] SOUNDS = Sound.values();
 
 
     @Override
@@ -73,27 +68,35 @@ public class RegionBGM extends JavaPlugin {
 
         Config message = new Config("message", this);
         message.loadDefaultPluginConfig();
-        messageConfig = new MessageConfig(message, "prefix");
 
         Config bgm = new Config("bgm", this);
         bgm.loadDefaultConfig();
 
+
+        // PlaySound
         bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
 
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("regionbgm.bgm." + key)) {
-                    RegionMapData api = new RegionMapData();
-                    regionMap.put(player, api.toString());
-                    player.sendMessage(regionMap.get(player));
-                    player.playSound(player.getLocation(), bgm.getString("bgm." + regionMap.get(player) + ".bgm"),
-                            bgm.getFloat("bgm." + regionMap.get(player) + ".volume"), bgm.getFloat("bgm." + regionMap.get(player) + ".pitch"));
+
+                    RegionAPI regionAPI = new RegionAPI(plugin);
+
+                    regionAPI.getRegions().forEach(rg -> {
+
+                        regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
+
+                            regionMap.put(player, regionAPI.getName(rg));
+
+                            player.stopSound(bgm.getConfig().getString("bgm." + regionAPI.getName(rg) + ".bgm"));
+                            playerInRegion.playSound(playerInRegion.getLocation(),
+                                    bgm.getConfig().getString("bgm." + regionAPI.getName(rg) + ".bgm"),
+                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".volume"),
+                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".pitch"));
+                        });
+                    });
                     break;
                 }
             }
         });
     }
-
-//        bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
-//            RegionMapData.taskIdMap.put(key, new HashMap<>());
-//        });
 }

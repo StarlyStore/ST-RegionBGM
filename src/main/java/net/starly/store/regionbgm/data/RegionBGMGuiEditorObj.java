@@ -272,59 +272,69 @@ public class RegionBGMGuiEditorObj {
      *
      * @param event AsyncPlayerChatEvent
      */
-    public void changeBGM(AsyncPlayerChatEvent event) {
+    public void changeBGM(@NotNull AsyncPlayerChatEvent event) {
 
         String message = event.getMessage();
+        StringData stringData = new StringData();
 
         if (changeBgmMap.containsKey(player) && guiType.get(player) == GuiEditor.BGM) {
             event.setCancelled(true);
 
-            Config config = new Config("bgm", plugin);
-            ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + changeBgmMap.get(player));
+            if (message.equalsIgnoreCase("cancel") || message.equalsIgnoreCase("취소")) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCancelChangeBGM()));
+                changeBgmMap.remove(player);
+                return;
+            } else {
 
-            RegionAPI regionAPI = new RegionAPI(plugin);
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                if (regionAPI.getRegion(changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
-                    onlinePlayer.stopSound(section.getString("bgm"));
 
-                    if (section.getBoolean("loop")) {
-                        Bukkit.getScheduler().cancelTask(taskIdMap.get(name).getB());
-//                    Bukkit.getScheduler().cancelTask(taskIdMap.get(changeBgmMap.get(player)).get(onlinePlayer));
+                Config config = new Config("bgm", plugin);
+                ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + changeBgmMap.get(player));
+
+                RegionAPI regionAPI = new RegionAPI(plugin);
+                for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                    if (regionAPI.getRegion(changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
+                        onlinePlayer.stopSound(section.getString("bgm"));
+
+                        if (section.getBoolean("loop")) {
+                            Bukkit.getScheduler().cancelTask(taskIdMap.get(name + " " + player.getName()));
+                        }
                     }
                 }
-            }
 
-            section.set("bgm", message);
-            config.saveConfig();
+                section.set("bgm", message);
+                config.saveConfig();
 
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                if (regionAPI.getRegion(changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
-                    if (section.getBoolean("loop")) {
-                        int taskId = new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                onlinePlayer.stopSound(section.getString("bgm"));
-                                onlinePlayer.playSound(onlinePlayer.getLocation(), message,
-                                        Float.parseFloat(section.getDouble("volume") + ""),
-                                        Float.parseFloat(section.getDouble("pitch") + ""));
-                            }
-                        }.runTaskTimerAsynchronously(plugin, 0, section.getInt("length") * 20L).getTaskId();
-//                        taskIdMap.get(changeBgmMap.get(player)).put(onlinePlayer, taskId);
-                        taskIdMap.put(name, Tuple.of(onlinePlayer, taskId));
+
+                for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                    if (regionAPI.getRegion(changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
+                        if (section.getBoolean("loop")) {
+                            int taskId = new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    onlinePlayer.stopSound(section.getString("bgm"));
+                                    onlinePlayer.playSound(onlinePlayer.getLocation(), message,
+                                            Float.parseFloat(section.getDouble("volume") + ""),
+                                            Float.parseFloat(section.getDouble("pitch") + ""));
+                                }
+                            }.runTaskTimerAsynchronously(plugin, 0, section.getInt("length") * 20L).getTaskId();
+                            taskIdMap.put(name + " " + onlinePlayer.getUniqueId(), taskId);
+                            System.out.println(Tuple.of(name, onlinePlayer.getName()) + " " + taskId);
+                        }
                     }
                 }
+
+
+                changeBgmMap.remove(player);
+                guiType.remove(player);
+
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCompleteChangeBGMName())
+                        .replace("{bgm}", message)
+                        .replace("{region}", regionMap.get(player)));
+
+
+                if (regionMap.containsKey(player))
+                    regionMap.remove(player);
             }
-
-
-            changeBgmMap.remove(player);
-            guiType.remove(player);
-
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a브금이" + message + "로 변경되었습니다."));
-
-
-            if (regionMap.containsKey(player))
-                regionMap.remove(player);
-
         }
     }
 
@@ -337,24 +347,40 @@ public class RegionBGMGuiEditorObj {
     public void changeBGMLength(@NotNull AsyncPlayerChatEvent event) {
 
         String message = event.getMessage();
+        StringData stringData = new StringData();
 
 
         if (changeBgmMap.containsKey(player) && guiType.get(player) == GuiEditor.LENGTH) {
             event.setCancelled(true);
 
-            Config config = new Config("bgm", plugin);
-            ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + changeBgmMap.get(player));
+            if (message.equalsIgnoreCase("cancel") || message.equalsIgnoreCase("취소")) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCancelChangeLength()));
+                changeBgmMap.remove(player);
+                return;
+            } else {
 
-            section.set("length", Integer.parseInt(message));
-            config.saveConfig();
 
-            changeBgmMap.remove(player);
-            guiType.remove(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a브금이 재생시간을" + message + "로 변경되었습니다."));
+                try {
+                    Config config = new Config("bgm", plugin);
+                    ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + changeBgmMap.get(player));
 
-            if (regionMap.containsKey(player))
-                regionMap.remove(player);
+                    section.set("length", Integer.parseInt(message));
+                    config.saveConfig();
+                } catch (NumberFormatException e) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.errMsgNumberInvalid()));
+                    return;
+                }
 
+                changeBgmMap.remove(player);
+                guiType.remove(player);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCompleteChangeBGMLength())
+                        .replace("{length}", message)
+                        .replace("{region}", regionMap.get(player)));
+
+                if (regionMap.containsKey(player))
+                    regionMap.remove(player);
+
+            }
         }
     }
 
@@ -364,7 +390,7 @@ public class RegionBGMGuiEditorObj {
      *
      * @param event InventoryClickEvent
      */
-    public void changeBGMVolume(InventoryClickEvent event) {
+    public void changeBGMVolume(@NotNull InventoryClickEvent event) {
 
         Config bgm = new Config("bgm", plugin);
         ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + regionMap.get(player));
@@ -405,7 +431,7 @@ public class RegionBGMGuiEditorObj {
      *
      * @param event InventoryClickEvent
      */
-    public void changeBGMPitch(InventoryClickEvent event) {
+    public void changeBGMPitch(@NotNull InventoryClickEvent event) {
 
         Config bgm = new Config("bgm", plugin);
         ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + regionMap.get(player));
@@ -450,7 +476,6 @@ public class RegionBGMGuiEditorObj {
         ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + regionMap.get(player));
 
         if (section.getBoolean("loop")) {
-            System.out.println(section.getBoolean("loop"));
             section.set("loop", false);
             bgm.saveConfig();
             openBGMEditor(regionMap.get(player));

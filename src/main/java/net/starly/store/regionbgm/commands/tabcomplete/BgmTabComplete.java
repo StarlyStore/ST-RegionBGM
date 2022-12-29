@@ -28,7 +28,7 @@ public class BgmTabComplete implements TabCompleter {
         if (sender instanceof Player player) {
 
             if (args.length == 1) {
-                StringUtil.copyPartialMatches(args[0], List.of("생성", "편집"), completions);
+                StringUtil.copyPartialMatches(args[0], List.of("생성", "편집", "제거", "도움말", "목록"), completions);
             } else if (args.length == 2) {
 
                 if(args[0].equalsIgnoreCase("생성")) {
@@ -42,6 +42,11 @@ public class BgmTabComplete implements TabCompleter {
                     ConfigurationSection regions = bgm.getConfig().getConfigurationSection("bgm.");
                     completions.addAll(regions.getKeys(false));
 
+                } else if (args[0].equalsIgnoreCase("제거")) {
+
+                    Config bgm = new Config("bgm", plugin);
+                    ConfigurationSection regions = bgm.getConfig().getConfigurationSection("bgm.");
+                    completions.addAll(regions.getKeys(false));
                 }
 
             } else if (args.length == 3) {

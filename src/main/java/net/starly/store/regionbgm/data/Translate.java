@@ -13,7 +13,7 @@ public class Translate {
      * @param list String List
      * @return String List
      */
-    protected static List<String> color(List<String> list) {
+    public static List<String> color(List<String> list) {
         List<String> newList = new ArrayList<>();
         for(String str : list) {
             str = ChatColor.translateAlternateColorCodes('&', str);

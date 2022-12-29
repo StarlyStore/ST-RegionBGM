@@ -3,13 +3,14 @@ package net.starly.store.regionbgm.event;
 import net.starly.core.data.Config;
 import net.starly.store.regionbgm.data.GuiEditor;
 import net.starly.store.regionbgm.data.RegionBGMGuiEditorObj;
+import net.starly.store.regionbgm.data.StringData;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-import static net.starly.store.regionbgm.RegionBGM.messageConfig;
 import static net.starly.store.regionbgm.RegionBGM.plugin;
 import static net.starly.store.regionbgm.data.RegionMapData.*;
 
@@ -33,13 +34,14 @@ public class InventoryClickListener implements Listener {
                 player.closeInventory();
 
                 Config data = new Config("data/" + player.getUniqueId(), plugin);
+                StringData stringData = new StringData();
 
                 if (data.getBoolean("toggle")) {
                     data.setBoolean("toggle", false);
-                    player.sendMessage(messageConfig.getMessage("messages.toggled_off"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgToggledOff()));
                 } else {
                     data.setBoolean("toggle", true);
-                    player.sendMessage(messageConfig.getMessage("messages.toggled_on"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgToggledOn()));
                 }
             }
             event.setCancelled(true);
@@ -58,6 +60,7 @@ public class InventoryClickListener implements Listener {
         int slot = event.getSlot();
 
         RegionBGMGuiEditorObj regionBGMGuiEditorObj = new RegionBGMGuiEditorObj(player);
+        StringData stringData = new StringData();
 
         Config config = new Config("config", plugin);
         if (event.getView().getTitle().equals(config.getString("edit_gui_settings.title"))) {
@@ -66,13 +69,13 @@ public class InventoryClickListener implements Listener {
 
                 changeBgmMap.put(player, regionMap.get(player));
                 guiType.put(player, GuiEditor.BGM);
-                player.sendMessage("§a변경할 구역브금을 채팅에 입력해주세요.");
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgTypingChangeBGMName()));
                 player.closeInventory();
             } else if (slot == config.getInt("edit_gui_settings.length.slot")) {
                 changeBgmMap.put(player, regionMap.get(player));
                 guiType.put(player, GuiEditor.LENGTH);
 
-                player.sendMessage("§a변경할 구역브금 재생시간을 채팅에 입력해주세요.");
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgTypingChangeBGMLength()));
                 player.closeInventory();
             } else if (slot == config.getInt("edit_gui_settings.volume.slot")) {
                 regionBGMGuiEditorObj.changeBGMVolume(event);

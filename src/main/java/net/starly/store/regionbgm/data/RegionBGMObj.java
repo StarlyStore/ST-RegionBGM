@@ -31,12 +31,12 @@ public class RegionBGMObj {
     /**
      * 구역브금을 생성합니다.
      *
-     * @param region 구역 이름
-     * @param bgmName    브금 이름
-     * @param length 브금 길이
-     * @param volume 브금 불륨
-     * @param pitch  브금 높낮이
-     * @param loop   브금 반복 여부
+     * @param region  구역 이름
+     * @param bgmName 브금 이름
+     * @param length  브금 길이
+     * @param volume  브금 불륨
+     * @param pitch   브금 높낮이
+     * @param loop    브금 반복 여부
      */
     public void createRegionBGM(String region, String bgmName, Integer length, Integer volume, Integer pitch, Boolean loop) {
         Config config = new Config("bgm", plugin);
@@ -53,9 +53,12 @@ public class RegionBGMObj {
             section.set("volume", volume);
             section.set("pitch", pitch);
             section.set("loop", loop);
-        }
 
-        config.saveConfig();
+            player.sendMessage("생성 완료!");
+            config.saveConfig();
+        } else {
+            player.sendMessage("이미 생성하셨어유 ㅠ");
+        }
     }
 
 
@@ -65,13 +68,45 @@ public class RegionBGMObj {
      * @param region 구역 이름
      */
     public void removeRegionBGM(String region) {
-        Config config = new Config("bgm/" + region, plugin);
-        ConfigurationSection section = config.getConfig().getConfigurationSection(region);
+        Config config = new Config("bgm", plugin);
 
-        if (section != null) {
-            config.getConfig().set(region, null);
-        } else {
-            System.out.println("존재하지 않는 구역입니다.");
-        }
+
+        config.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
+            ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + key);
+
+            if (region.equals(key)) {
+                player.sendMessage("없는 구역이네요");
+                return;
+            }
+
+            if (section != null) {
+                if (key.equals(region)) {
+                    config.getConfig().set("bgm." + key, null);
+                    config.saveConfig();
+                    player.sendMessage("삭제 완료!");
+                }
+            }
+
+        });
+
+    }
+
+
+    public void showRegionBGMList() {
+        Config config = new Config("bgm", plugin);
+        config.loadDefaultConfig();
+
+        player.sendMessage("§e§l구역브금 목록");
+        player.sendMessage("§e§l====================");
+
+        config.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
+            ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + key);
+
+            if (section != null) {
+                player.sendMessage("§e§l" + key + " §f§l: §e§l" + section.getString("bgm"));
+            }
+        });
+
+        player.sendMessage("§e§l====================");
     }
 }

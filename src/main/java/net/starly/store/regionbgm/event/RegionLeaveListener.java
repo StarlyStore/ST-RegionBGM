@@ -1,6 +1,8 @@
 package net.starly.store.regionbgm.event;
 
 import net.starly.core.data.Config;
+import net.starly.core.data.util.Tuple;
+import net.starly.region.api.RegionAPI;
 import net.starly.region.events.RegionLeaveEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -32,13 +34,12 @@ public class RegionLeaveListener implements Listener {
         if (section != null) {
             String name = event.getName();
 
-
             player.stopSound(config.getConfig().getString("bgm." + name + ".bgm"));
 
-            if (!taskIdMap.containsKey(name)) return;
+            if (!taskIdMap.containsKey(name + " " + player.getUniqueId())) return;
 
-            Bukkit.getScheduler().cancelTask(taskIdMap.get(name).getB());
-            taskIdMap.remove(name);
+            Bukkit.getScheduler().cancelTask(taskIdMap.get(name + " " + player.getUniqueId()));
+            taskIdMap.remove(name + " " + player.getUniqueId());
         }
     }
 }

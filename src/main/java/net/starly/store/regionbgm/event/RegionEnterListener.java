@@ -1,7 +1,6 @@
 package net.starly.store.regionbgm.event;
 
 import net.starly.core.data.Config;
-import net.starly.core.data.util.Tuple;
 import net.starly.region.events.RegionEnterEvent;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -49,8 +48,7 @@ public class RegionEnterListener implements Listener {
             if (config.getBoolean("bgm." + name + ".loop")) {
 
                 int taskId = task.runTaskTimerAsynchronously(plugin, 0, config.getInt("bgm." + name + ".length") * 20).getTaskId();
-                taskIdMap.put(name, Tuple.of(player, taskId));
-
+                taskIdMap.put(name + " " + player.getUniqueId(), taskId);
 
             } else {
                 task.runTaskAsynchronously(plugin);
