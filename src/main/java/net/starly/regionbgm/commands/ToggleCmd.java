@@ -1,6 +1,6 @@
-package net.starly.store.regionbgm.commands;
+package net.starly.regionbgm.commands;
 
-import net.starly.store.regionbgm.data.ToggleObj;
+import net.starly.regionbgm.data.ToggleObj;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

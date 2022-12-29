@@ -1,13 +1,12 @@
-package net.starly.store.regionbgm.data;
+package net.starly.regionbgm.data;
 
 import net.starly.core.data.Config;
+import net.starly.regionbgm.RegionBGM;
 import org.bukkit.entity.Player;
-
-import static net.starly.store.regionbgm.RegionBGM.plugin;
 
 public class StringData {
 
-    private Config message = new Config("message", plugin);
+    private Config message = new Config("message", RegionBGM.plugin);
 
 
     public String msgHelp(Player player) {
@@ -58,6 +57,10 @@ public class StringData {
         return getPrefix() + message.getString("msg.complete_remove");
     }
 
+    public String errMsgCreateNoExistRegion() {
+        return getPrefix() + message.getString("errMsg.create.noExistRegion");
+    }
+
     public String errMsgNumberInvalid() {
         return getPrefix() + message.getString("errMsg.numberInvalid");
     }
@@ -73,7 +76,6 @@ public class StringData {
     public String errMsgInvalidCommand() {
         return getPrefix() + message.getString("errMsg.invalidCommand");
     }
-
 
     public String errMsgCreateTypingRegionName() {
         return getPrefix() + message.getString("errMsg.create.typingRegionName");

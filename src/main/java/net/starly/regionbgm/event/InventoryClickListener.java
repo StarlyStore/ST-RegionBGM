@@ -1,18 +1,17 @@
-package net.starly.store.regionbgm.event;
+package net.starly.regionbgm.event;
 
 import net.starly.core.data.Config;
-import net.starly.store.regionbgm.data.GuiEditor;
-import net.starly.store.regionbgm.data.RegionBGMGuiEditorObj;
-import net.starly.store.regionbgm.data.StringData;
+import net.starly.regionbgm.RegionBGM;
+import net.starly.regionbgm.data.GuiEditor;
+import net.starly.regionbgm.data.RegionMapData;
+import net.starly.regionbgm.data.RegionBGMGuiEditorObj;
+import net.starly.regionbgm.data.StringData;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
-
-import static net.starly.store.regionbgm.RegionBGM.plugin;
-import static net.starly.store.regionbgm.data.RegionMapData.*;
 
 public class InventoryClickListener implements Listener {
 
@@ -27,13 +26,13 @@ public class InventoryClickListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         int slot = event.getSlot();
 
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
         if (event.getView().getTitle().equals(config.getString("toggled_gui_settings.title"))) {
             if (slot == config.getInt("toggled_gui_settings.toggled_on.slot")) {
                 event.setCancelled(true);
                 player.closeInventory();
 
-                Config data = new Config("data/" + player.getUniqueId(), plugin);
+                Config data = new Config("data/" + player.getUniqueId(), RegionBGM.plugin);
                 StringData stringData = new StringData();
 
                 if (data.getBoolean("toggle")) {
@@ -62,18 +61,18 @@ public class InventoryClickListener implements Listener {
         RegionBGMGuiEditorObj regionBGMGuiEditorObj = new RegionBGMGuiEditorObj(player);
         StringData stringData = new StringData();
 
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
         if (event.getView().getTitle().equals(config.getString("edit_gui_settings.title"))) {
 
             if (slot == config.getInt("edit_gui_settings.bgmName.slot")) {
 
-                changeBgmMap.put(player, regionMap.get(player));
-                guiType.put(player, GuiEditor.BGM);
+                RegionMapData.changeBgmMap.put(player, RegionMapData.regionMap.get(player));
+                RegionMapData.guiType.put(player, GuiEditor.BGM);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgTypingChangeBGMName()));
                 player.closeInventory();
             } else if (slot == config.getInt("edit_gui_settings.length.slot")) {
-                changeBgmMap.put(player, regionMap.get(player));
-                guiType.put(player, GuiEditor.LENGTH);
+                RegionMapData.changeBgmMap.put(player, RegionMapData.regionMap.get(player));
+                RegionMapData.guiType.put(player, GuiEditor.LENGTH);
 
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgTypingChangeBGMLength()));
                 player.closeInventory();

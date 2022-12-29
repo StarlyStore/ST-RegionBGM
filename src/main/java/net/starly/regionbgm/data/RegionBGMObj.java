@@ -1,11 +1,14 @@
-package net.starly.store.regionbgm.data;
+package net.starly.regionbgm.data;
 
 import net.starly.core.data.Config;
+import net.starly.core.data.location.Region;
+import net.starly.region.api.RegionAPI;
+import net.starly.regionbgm.RegionBGM;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-import static net.starly.store.regionbgm.RegionBGM.plugin;
+import static net.starly.regionbgm.RegionBGM.plugin;
 
 public class RegionBGMObj {
 
@@ -46,6 +49,13 @@ public class RegionBGMObj {
         StringData stringData = new StringData();
         ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + region);
 
+        RegionAPI regionAPI = new RegionAPI(plugin);
+        if (regionAPI.getRegion(region) == null) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.errMsgCreateNoExistRegion()));
+            return;
+        }
+
+
         if (section == null) {
             config.getConfig().createSection("bgm." + region);
             section = config.getConfig().getConfigurationSection("bgm." + region);
@@ -75,22 +85,17 @@ public class RegionBGMObj {
 
         StringData stringData = new StringData();
 
-        config.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
-            ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + key);
+        ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + region);
 
-            if(!key.equalsIgnoreCase(region)) {
+        if (section == null) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.errMsgNotExistRegion()));
+            return;
+        }
 
-                if (section != null) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.errMsgNotExistRegion()));
-                }
-            } else {
-                config.getConfig().set("bgm." + key, null);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCompleteRemove()
-                        .replace("{region}", region)));
-                config.saveConfig();
-            }
-
-        });
+        config.setObject("bgm." + region, null);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCompleteRemove()
+                .replace("{region}", region)));
+        config.saveConfig();
     }
 
 

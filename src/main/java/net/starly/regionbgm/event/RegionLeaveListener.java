@@ -1,9 +1,8 @@
-package net.starly.store.regionbgm.event;
+package net.starly.regionbgm.event;
 
 import net.starly.core.data.Config;
-import net.starly.core.data.util.Tuple;
-import net.starly.region.api.RegionAPI;
 import net.starly.region.events.RegionLeaveEvent;
+import net.starly.regionbgm.data.RegionMapData;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -11,8 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
-import static net.starly.store.regionbgm.RegionBGM.plugin;
-import static net.starly.store.regionbgm.data.RegionMapData.*;
+import static net.starly.regionbgm.RegionBGM.plugin;
 
 public class RegionLeaveListener implements Listener {
 
@@ -36,10 +34,10 @@ public class RegionLeaveListener implements Listener {
 
             player.stopSound(config.getConfig().getString("bgm." + name + ".bgm"));
 
-            if (!taskIdMap.containsKey(name + " " + player.getUniqueId())) return;
+            if (!RegionMapData.taskIdMap.containsKey(name + " " + player.getUniqueId())) return;
 
-            Bukkit.getScheduler().cancelTask(taskIdMap.get(name + " " + player.getUniqueId()));
-            taskIdMap.remove(name + " " + player.getUniqueId());
+            Bukkit.getScheduler().cancelTask(RegionMapData.taskIdMap.get(name + " " + player.getUniqueId()));
+            RegionMapData.taskIdMap.remove(name + " " + player.getUniqueId());
         }
     }
 }

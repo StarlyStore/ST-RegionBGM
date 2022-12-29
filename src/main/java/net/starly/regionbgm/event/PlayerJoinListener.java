@@ -1,6 +1,6 @@
-package net.starly.store.regionbgm.event;
+package net.starly.regionbgm.event;
 
-import net.starly.store.regionbgm.data.RegionBGMObj;
+import net.starly.regionbgm.data.RegionBGMObj;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

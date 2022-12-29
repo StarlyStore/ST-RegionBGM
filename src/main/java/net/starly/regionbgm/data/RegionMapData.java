@@ -1,4 +1,4 @@
-package net.starly.store.regionbgm.data;
+package net.starly.regionbgm.data;
 
 import org.bukkit.entity.Player;
 

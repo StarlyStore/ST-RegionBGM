@@ -1,8 +1,8 @@
-package net.starly.store.regionbgm.commands;
+package net.starly.regionbgm.commands;
 
-import net.starly.store.regionbgm.data.RegionBGMGuiEditorObj;
-import net.starly.store.regionbgm.data.RegionBGMObj;
-import net.starly.store.regionbgm.data.StringData;
+import net.starly.regionbgm.data.RegionBGMGuiEditorObj;
+import net.starly.regionbgm.data.StringData;
+import net.starly.regionbgm.data.RegionBGMObj;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -77,7 +77,7 @@ public class BGMCmd implements CommandExecutor {
 
                 case "제거", "삭제", "remove", "delete" -> {
 
-                    if(args.length < 2) {
+                    if (args.length < 2) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgTypingDelRegionName()));
                         return true;
                     }

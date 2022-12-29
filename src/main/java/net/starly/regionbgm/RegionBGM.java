@@ -1,18 +1,16 @@
-package net.starly.store.regionbgm;
+package net.starly.regionbgm;
 
 import net.starly.core.data.Config;
 import net.starly.region.api.RegionAPI;
-import net.starly.store.regionbgm.commands.BGMCmd;
-import net.starly.store.regionbgm.commands.ToggleCmd;
-import net.starly.store.regionbgm.commands.tabcomplete.BgmTabComplete;
-import net.starly.store.regionbgm.event.*;
+import net.starly.regionbgm.data.RegionMapData;
+import net.starly.regionbgm.event.*;
+import net.starly.regionbgm.commands.BGMCmd;
+import net.starly.regionbgm.commands.ToggleCmd;
+import net.starly.regionbgm.commands.tabcomplete.BgmTabComplete;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-
-import static net.starly.store.regionbgm.data.RegionMapData.regionMap;
 
 
 public class RegionBGM extends JavaPlugin {
@@ -85,7 +83,7 @@ public class RegionBGM extends JavaPlugin {
 
                         regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
 
-                            regionMap.put(player, regionAPI.getName(rg));
+                            RegionMapData.regionMap.put(player, regionAPI.getName(rg));
 
                             player.stopSound(bgm.getConfig().getString("bgm." + regionAPI.getName(rg) + ".bgm"));
                             playerInRegion.playSound(playerInRegion.getLocation(),

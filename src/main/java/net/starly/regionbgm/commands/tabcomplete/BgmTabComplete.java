@@ -1,7 +1,8 @@
-package net.starly.store.regionbgm.commands.tabcomplete;
+package net.starly.regionbgm.commands.tabcomplete;
 
 import net.starly.core.data.Config;
 import net.starly.region.api.RegionAPI;
+import net.starly.regionbgm.RegionBGM;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -13,8 +14,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static net.starly.store.regionbgm.RegionBGM.plugin;
 
 public class BgmTabComplete implements TabCompleter {
 
@@ -32,19 +31,19 @@ public class BgmTabComplete implements TabCompleter {
             } else if (args.length == 2) {
 
                 if(args[0].equalsIgnoreCase("생성")) {
-                    RegionAPI regionAPI = new RegionAPI(plugin);
+                    RegionAPI regionAPI = new RegionAPI(RegionBGM.plugin);
 
                         completions.addAll(regionAPI.getRegionMap().keySet());
 
                 } else if (args[0].equalsIgnoreCase("편집")) {
 
-                    Config bgm = new Config("bgm", plugin);
+                    Config bgm = new Config("bgm", RegionBGM.plugin);
                     ConfigurationSection regions = bgm.getConfig().getConfigurationSection("bgm.");
                     completions.addAll(regions.getKeys(false));
 
                 } else if (args[0].equalsIgnoreCase("제거")) {
 
-                    Config bgm = new Config("bgm", plugin);
+                    Config bgm = new Config("bgm", RegionBGM.plugin);
                     ConfigurationSection regions = bgm.getConfig().getConfigurationSection("bgm.");
                     completions.addAll(regions.getKeys(false));
                 }

@@ -1,7 +1,6 @@
-package net.starly.store.regionbgm.data;
+package net.starly.regionbgm.data;
 
 import net.starly.core.data.Config;
-import net.starly.core.data.MessageConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static net.starly.store.regionbgm.RegionBGM.plugin;
+import static net.starly.regionbgm.RegionBGM.plugin;
 
 public class ToggleObj {
 

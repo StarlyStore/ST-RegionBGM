@@ -1,5 +1,5 @@
 name: ST-RegionBGM
-main: net.starly.store.regionbgm.RegionBGM
+main: net.starly.regionbgm.RegionBGM
 author: Starly Team
 website: https://discord.gg/TF8jqSJjCG
 description: RegionBGM Plugin

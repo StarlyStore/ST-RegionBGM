@@ -1,8 +1,9 @@
-package net.starly.store.regionbgm.data;
+package net.starly.regionbgm.data;
 
 import net.starly.core.data.Config;
 import net.starly.core.data.util.Tuple;
 import net.starly.region.api.RegionAPI;
+import net.starly.regionbgm.RegionBGM;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,9 +19,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-import static net.starly.store.regionbgm.RegionBGM.plugin;
-import static net.starly.store.regionbgm.data.RegionMapData.*;
 
 @SuppressWarnings("all")
 public class RegionBGMGuiEditorObj {
@@ -40,7 +38,7 @@ public class RegionBGMGuiEditorObj {
     public void openBGMEditor(String region) {
 
 
-        Config bgm = new Config("bgm", plugin);
+        Config bgm = new Config("bgm", RegionBGM.plugin);
         ConfigurationSection regions = bgm.getConfig().getConfigurationSection("bgm.");
 
         if (!regions.getKeys(false).contains(region)) {
@@ -48,11 +46,11 @@ public class RegionBGMGuiEditorObj {
             return;
         }
 
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
         Inventory inv = Bukkit.createInventory(null,
                 config.getConfig().getInt("edit_gui_settings.size") * 9,
                 config.getConfig().getString("edit_gui_settings.title"));
-        regionMap.put(player, region);
+        RegionMapData.regionMap.put(player, region);
 
         statusEditor(inv);
         bgmNameEditor(inv, region);
@@ -78,11 +76,11 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void bgmNameEditor(@NotNull Inventory inv, String bgmName) {
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.bgmName.name"));
         String material = config.getConfig().getString("edit_gui_settings.bgmName.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.bgmName.lore"));
-        Config bgm = new Config("bgm", plugin);
+        Config bgm = new Config("bgm", RegionBGM.plugin);
         lore.replaceAll(s -> s.replace("{bgm}", bgm.getString("bgm." + bgmName + ".bgm")));
         int slot = config.getConfig().getInt("edit_gui_settings.bgmName.slot");
 
@@ -102,17 +100,17 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void statusEditor(Inventory inv) {
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
 
-        String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.status.name").replace("{region}", regionMap.get(player)));
+        String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.status.name").replace("{region}", RegionMapData.regionMap.get(player)));
         String material = config.getConfig().getString("edit_gui_settings.status.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.status.lore"));
-        Config bgm = new Config("bgm", plugin);
-        lore.replaceAll(s -> s.replace("{bgm}", bgm.getString("bgm." + regionMap.get(player) + ".bgm"))
-                .replace("{length}", String.valueOf(bgm.getConfig().getDouble("bgm." + regionMap.get(player) + ".length")))
-                .replace("{volume}", String.valueOf(bgm.getConfig().getDouble("bgm." + regionMap.get(player) + ".volume")))
-                .replace("{pitch}", String.valueOf(bgm.getConfig().getDouble("bgm." + regionMap.get(player) + ".pitch")))
-                .replace("{loop}", String.valueOf(bgm.getConfig().getBoolean("bgm." + regionMap.get(player) + ".loop"))));
+        Config bgm = new Config("bgm", RegionBGM.plugin);
+        lore.replaceAll(s -> s.replace("{bgm}", bgm.getString("bgm." + RegionMapData.regionMap.get(player) + ".bgm"))
+                .replace("{length}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".length")))
+                .replace("{volume}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".volume")))
+                .replace("{pitch}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".pitch")))
+                .replace("{loop}", String.valueOf(bgm.getConfig().getBoolean("bgm." + RegionMapData.regionMap.get(player) + ".loop"))));
 
         int slot = config.getConfig().getInt("edit_gui_settings.status.slot");
 
@@ -132,13 +130,13 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void lengthEditor(Inventory inv) {
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.length.name"));
         String material = config.getConfig().getString("edit_gui_settings.length.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.length.lore"));
-        Config bgm = new Config("bgm", plugin);
-        lore.replaceAll(s -> s.replace("{length}", String.valueOf(bgm.getConfig().getDouble("bgm." + regionMap.get(player) + ".length"))));
+        Config bgm = new Config("bgm", RegionBGM.plugin);
+        lore.replaceAll(s -> s.replace("{length}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".length"))));
         int slot = config.getConfig().getInt("edit_gui_settings.length.slot");
 
         ItemStack item = new ItemStack(Material.valueOf(material));
@@ -157,13 +155,13 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void volumeEditor(Inventory inv) {
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.volume.name"));
         String material = config.getConfig().getString("edit_gui_settings.volume.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.volume.lore"));
-        Config bgm = new Config("bgm", plugin);
-        lore.replaceAll(s -> s.replace("{volume}", String.valueOf(bgm.getConfig().getDouble("bgm." + regionMap.get(player) + ".volume"))));
+        Config bgm = new Config("bgm", RegionBGM.plugin);
+        lore.replaceAll(s -> s.replace("{volume}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".volume"))));
         int slot = config.getConfig().getInt("edit_gui_settings.volume.slot");
 
         ItemStack item = new ItemStack(Material.valueOf(material));
@@ -182,13 +180,13 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void pitchEditor(Inventory inv) {
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.pitch.name"));
         String material = config.getConfig().getString("edit_gui_settings.pitch.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.pitch.lore"));
-        Config bgm = new Config("bgm", plugin);
-        lore.replaceAll(s -> s.replace("{pitch}", String.valueOf(bgm.getConfig().getDouble("bgm." + regionMap.get(player) + ".pitch"))));
+        Config bgm = new Config("bgm", RegionBGM.plugin);
+        lore.replaceAll(s -> s.replace("{pitch}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".pitch"))));
         int slot = config.getConfig().getInt("edit_gui_settings.pitch.slot");
 
         ItemStack item = new ItemStack(Material.valueOf(material));
@@ -207,7 +205,7 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void loopTrueEditor(Inventory inv) {
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.loop.true.name"));
         String material = config.getConfig().getString("edit_gui_settings.loop.true.material");
@@ -230,7 +228,7 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void loopFalseEditor(Inventory inv) {
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGM.plugin);
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.loop.false.name"));
         String material = config.getConfig().getString("edit_gui_settings.loop.false.material");
@@ -277,26 +275,26 @@ public class RegionBGMGuiEditorObj {
         String message = event.getMessage();
         StringData stringData = new StringData();
 
-        if (changeBgmMap.containsKey(player) && guiType.get(player) == GuiEditor.BGM) {
+        if (RegionMapData.changeBgmMap.containsKey(player) && RegionMapData.guiType.get(player) == GuiEditor.BGM) {
             event.setCancelled(true);
 
             if (message.equalsIgnoreCase("cancel") || message.equalsIgnoreCase("취소")) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCancelChangeBGM()));
-                changeBgmMap.remove(player);
+                RegionMapData.changeBgmMap.remove(player);
                 return;
             } else {
 
 
-                Config config = new Config("bgm", plugin);
-                ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + changeBgmMap.get(player));
+                Config config = new Config("bgm", RegionBGM.plugin);
+                ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + RegionMapData.changeBgmMap.get(player));
 
-                RegionAPI regionAPI = new RegionAPI(plugin);
+                RegionAPI regionAPI = new RegionAPI(RegionBGM.plugin);
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                    if (regionAPI.getRegion(changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
+                    if (regionAPI.getRegion(RegionMapData.changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
                         onlinePlayer.stopSound(section.getString("bgm"));
 
                         if (section.getBoolean("loop")) {
-                            Bukkit.getScheduler().cancelTask(taskIdMap.get(name + " " + player.getName()));
+                            Bukkit.getScheduler().cancelTask(RegionMapData.taskIdMap.get(name + " " + player.getName()));
                         }
                     }
                 }
@@ -306,7 +304,7 @@ public class RegionBGMGuiEditorObj {
 
 
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                    if (regionAPI.getRegion(changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
+                    if (regionAPI.getRegion(RegionMapData.changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
                         if (section.getBoolean("loop")) {
                             int taskId = new BukkitRunnable() {
                                 @Override
@@ -316,24 +314,24 @@ public class RegionBGMGuiEditorObj {
                                             Float.parseFloat(section.getDouble("volume") + ""),
                                             Float.parseFloat(section.getDouble("pitch") + ""));
                                 }
-                            }.runTaskTimerAsynchronously(plugin, 0, section.getInt("length") * 20L).getTaskId();
-                            taskIdMap.put(name + " " + onlinePlayer.getUniqueId(), taskId);
+                            }.runTaskTimerAsynchronously(RegionBGM.plugin, 0, section.getInt("length") * 20L).getTaskId();
+                            RegionMapData.taskIdMap.put(name + " " + onlinePlayer.getUniqueId(), taskId);
                             System.out.println(Tuple.of(name, onlinePlayer.getName()) + " " + taskId);
                         }
                     }
                 }
 
 
-                changeBgmMap.remove(player);
-                guiType.remove(player);
+                RegionMapData.changeBgmMap.remove(player);
+                RegionMapData.guiType.remove(player);
 
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCompleteChangeBGMName())
                         .replace("{bgm}", message)
-                        .replace("{region}", regionMap.get(player)));
+                        .replace("{region}", RegionMapData.regionMap.get(player)));
 
 
-                if (regionMap.containsKey(player))
-                    regionMap.remove(player);
+                if (RegionMapData.regionMap.containsKey(player))
+                    RegionMapData.regionMap.remove(player);
             }
         }
     }
@@ -350,19 +348,19 @@ public class RegionBGMGuiEditorObj {
         StringData stringData = new StringData();
 
 
-        if (changeBgmMap.containsKey(player) && guiType.get(player) == GuiEditor.LENGTH) {
+        if (RegionMapData.changeBgmMap.containsKey(player) && RegionMapData.guiType.get(player) == GuiEditor.LENGTH) {
             event.setCancelled(true);
 
             if (message.equalsIgnoreCase("cancel") || message.equalsIgnoreCase("취소")) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCancelChangeLength()));
-                changeBgmMap.remove(player);
+                RegionMapData.changeBgmMap.remove(player);
                 return;
             } else {
 
 
                 try {
-                    Config config = new Config("bgm", plugin);
-                    ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + changeBgmMap.get(player));
+                    Config config = new Config("bgm", RegionBGM.plugin);
+                    ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + RegionMapData.changeBgmMap.get(player));
 
                     section.set("length", Integer.parseInt(message));
                     config.saveConfig();
@@ -371,14 +369,14 @@ public class RegionBGMGuiEditorObj {
                     return;
                 }
 
-                changeBgmMap.remove(player);
-                guiType.remove(player);
+                RegionMapData.changeBgmMap.remove(player);
+                RegionMapData.guiType.remove(player);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCompleteChangeBGMLength())
                         .replace("{length}", message)
-                        .replace("{region}", regionMap.get(player)));
+                        .replace("{region}", RegionMapData.regionMap.get(player)));
 
-                if (regionMap.containsKey(player))
-                    regionMap.remove(player);
+                if (RegionMapData.regionMap.containsKey(player))
+                    RegionMapData.regionMap.remove(player);
 
             }
         }
@@ -392,13 +390,13 @@ public class RegionBGMGuiEditorObj {
      */
     public void changeBGMVolume(@NotNull InventoryClickEvent event) {
 
-        Config bgm = new Config("bgm", plugin);
-        ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + regionMap.get(player));
+        Config bgm = new Config("bgm", RegionBGM.plugin);
+        ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + RegionMapData.regionMap.get(player));
 
         if (event.getClick() == ClickType.LEFT) {
             section.set("volume", Float.parseFloat(section.getDouble("volume") + 0.1F + ""));
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         } else if (event.getClick() == ClickType.RIGHT) {
 
             if (section.getDouble("volume") - 0.1F < 0) {
@@ -407,12 +405,12 @@ public class RegionBGMGuiEditorObj {
                 section.set("volume", Float.parseFloat(section.getDouble("volume") - 0.1F + ""));
             }
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         } else if (event.getClick() == ClickType.SHIFT_LEFT) {
 
             section.set("volume", Float.parseFloat(section.getDouble("volume") + 1F + ""));
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         } else if (event.getClick() == ClickType.SHIFT_RIGHT) {
 
             if (section.getDouble("volume") - 1F < 0) {
@@ -421,7 +419,7 @@ public class RegionBGMGuiEditorObj {
                 section.set("volume", Float.parseFloat(section.getDouble("volume") - 1F + ""));
             }
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         }
     }
 
@@ -433,13 +431,13 @@ public class RegionBGMGuiEditorObj {
      */
     public void changeBGMPitch(@NotNull InventoryClickEvent event) {
 
-        Config bgm = new Config("bgm", plugin);
-        ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + regionMap.get(player));
+        Config bgm = new Config("bgm", RegionBGM.plugin);
+        ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + RegionMapData.regionMap.get(player));
 
         if (event.getClick() == ClickType.LEFT) {
             section.set("pitch", Float.parseFloat(section.getDouble("pitch") + 0.1F + ""));
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         } else if (event.getClick() == ClickType.RIGHT) {
 
             if (section.getDouble("pitch") - 0.1F < 0) {
@@ -448,12 +446,12 @@ public class RegionBGMGuiEditorObj {
                 section.set("pitch", Float.parseFloat(section.getDouble("pitch") - 0.1F + ""));
             }
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         } else if (event.getClick() == ClickType.SHIFT_LEFT) {
 
             section.set("pitch", Float.parseFloat(section.getDouble("pitch") + 1F + ""));
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         } else if (event.getClick() == ClickType.SHIFT_RIGHT) {
 
             if (section.getDouble("pitch") - 1F < 0) {
@@ -462,7 +460,7 @@ public class RegionBGMGuiEditorObj {
                 section.set("pitch", Float.parseFloat(section.getDouble("pitch") - 1F + ""));
             }
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         }
     }
 
@@ -472,17 +470,17 @@ public class RegionBGMGuiEditorObj {
      */
     public void changeBGMLoop() {
 
-        Config bgm = new Config("bgm", plugin);
-        ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + regionMap.get(player));
+        Config bgm = new Config("bgm", RegionBGM.plugin);
+        ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + RegionMapData.regionMap.get(player));
 
         if (section.getBoolean("loop")) {
             section.set("loop", false);
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         } else {
             section.set("loop", true);
             bgm.saveConfig();
-            openBGMEditor(regionMap.get(player));
+            openBGMEditor(RegionMapData.regionMap.get(player));
         }
     }
 }
