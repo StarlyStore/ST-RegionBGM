@@ -1,6 +1,7 @@
 package net.starly.store.regionbgm.commands.tabcomplete;
 
 import net.starly.core.data.Config;
+import net.starly.region.api.RegionAPI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -31,39 +32,40 @@ public class BgmTabComplete implements TabCompleter {
             } else if (args.length == 2) {
 
                 if(args[0].equalsIgnoreCase("생성")) {
-                    StringUtil.copyPartialMatches(args[1], List.of("<구역 이름>"), completions);
+                    RegionAPI regionAPI = new RegionAPI(plugin);
+
+                        completions.addAll(regionAPI.getRegionMap().keySet());
+
                 } else if (args[0].equalsIgnoreCase("편집")) {
 
                     Config bgm = new Config("bgm", plugin);
                     ConfigurationSection regions = bgm.getConfig().getConfigurationSection("bgm.");
+                    completions.addAll(regions.getKeys(false));
 
-                    for (String region : regions.getKeys(false)) {
-                        StringUtil.copyPartialMatches(args[1], List.of(region), completions);
-                    }
                 }
 
             } else if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("생성")) {
-                    StringUtil.copyPartialMatches(args[2], List.of("<곡>"), completions);
+                    completions.add("<곡>");
                 }
 
             } else if (args.length == 4) {
                 if (args[0].equalsIgnoreCase("생성")) {
-                    StringUtil.copyPartialMatches(args[3], List.of("<길이>"), completions);
+                    completions.add("<길이>");
                 }
             } else if (args.length == 5) {
                 if (args[0].equalsIgnoreCase("생성")) {
-                    StringUtil.copyPartialMatches(args[4], List.of("<볼륨>"), completions);
+                    completions.add("<볼륨>");
                 }
 
             } else if (args.length == 6) {
                 if (args[0].equalsIgnoreCase("생성")) {
-                    StringUtil.copyPartialMatches(args[5], List.of("<높낮이>"), completions);
+                    completions.add("<높낮이>");
                 }
 
             } else if (args.length == 7) {
                 if (args[0].equalsIgnoreCase("생성")) {
-                    StringUtil.copyPartialMatches(args[6], List.of("<반복 | true/false>"), completions);
+                    completions.add("<반복 | true/false>");
                 }
             }
         }

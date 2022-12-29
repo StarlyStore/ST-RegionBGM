@@ -4,19 +4,19 @@ toggled_gui_settings:
   size: 3
   toggled_on:
     material: LIME_WOOL
-    name: '&2&l[ &a브금 켜기 &2&l]'
+    name: '&6[ 브금 켜기 &6]'
     slot: 13
     lore:
       - ''
-      - '&e&l➥ &f&l우클릭시 브금을 켭니다! '
+      - '&e&l➥ &f&l아이템을 클릭시 브금을 켭니다! '
       - ''
   toggled_off:
     material: RED_WOOL
-    name: '&4&l>> &c브금 끄기 &4&l<<'
+    name: '&6[ 브금 끄기 &6]'
     slot: 13
     lore:
       - ''
-      - '&e&l➥ &f&l좌클릭시 브금을 끕니다! '
+      - '&e&l➥ &f&l아이템을 클릭시 브금을 끕니다! '
       - ''
 
 # 구역브금 편집기 GUI

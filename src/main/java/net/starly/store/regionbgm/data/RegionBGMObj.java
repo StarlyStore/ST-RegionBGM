@@ -44,9 +44,9 @@ public class RegionBGMObj {
 
         ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + region);
 
-        if (section == null) { //섹션이 없다면
-            config.getConfig().createSection("bgm." + region); //섹션 만듬
-            section = config.getConfig().getConfigurationSection("bgm." + region); //섹션 다시 불러옴
+        if (section == null) {
+            config.getConfig().createSection("bgm." + region);
+            section = config.getConfig().getConfigurationSection("bgm." + region);
 
             section.set("bgm", bgmName);
             section.set("length", length);
@@ -71,10 +71,5 @@ public class RegionBGMObj {
         if (section != null) {
             config.getConfig().set(region, null);
         }
-    }
-
-
-    public void createBGM(String music) {
-
     }
 }

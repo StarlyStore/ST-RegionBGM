@@ -26,7 +26,7 @@ dependencies {
     compileOnly "org.spigotmc:spigot-api:R0.1:1.16.5"
 
     // PLUGIN API
-    compileOnly "net.starly.region:Region-API:1.0"
+    compileOnly "net.starly.region:Region-API:1.1.2"
 
     // OTHER DEPENDENCIES
     compileOnly "net.starly.core:ST-Core:1.3"

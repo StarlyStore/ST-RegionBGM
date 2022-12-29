@@ -22,11 +22,9 @@ public class RegionLeaveListener implements Listener {
     @EventHandler
     public void leaveRegion(@NotNull RegionLeaveEvent event) {
         Player player = event.getPlayer();
-        Config data = new Config("data/" + player.getUniqueId(), plugin);
-        data.loadDefaultConfig();
-        if (!data.getBoolean("toggle")) return;
 
         Config config = new Config("bgm", plugin);
+        config.loadDefaultConfig();
         ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + event.getName());
 
         if (section != null) {
@@ -34,8 +32,8 @@ public class RegionLeaveListener implements Listener {
 
             player.stopSound(config.getConfig().getString("bgm." + name + ".bgm"));
 
-            if (taskIdMap.containsKey(player)) {
-                Bukkit.getScheduler().cancelTask(taskIdMap.get(player));
+            if (taskIdMap.containsKey(name)) {
+                Bukkit.getScheduler().cancelTask(taskIdMap.get(name).get(player));
                 taskIdMap.remove(player);
             }
         }

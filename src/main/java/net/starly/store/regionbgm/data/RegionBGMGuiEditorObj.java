@@ -1,9 +1,11 @@
 package net.starly.store.regionbgm.data;
 
 import net.starly.core.data.Config;
+import net.starly.region.api.RegionAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -12,6 +14,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.List;
 import static net.starly.store.regionbgm.RegionBGM.plugin;
 import static net.starly.store.regionbgm.data.RegionMapData.*;
 
+@SuppressWarnings("all")
 public class RegionBGMGuiEditorObj {
 
     private Player player;
@@ -29,21 +33,17 @@ public class RegionBGMGuiEditorObj {
         this.player = player;
     }
 
-    public RegionBGMGuiEditorObj(String name, Player player) {
-        this.name = name;
-        this.player = player;
-    }
-
 
     /**
      * 구역브금 편집기를 엽니다.
      */
     public void openBGMEditor(String region) {
 
+
         Config bgm = new Config("bgm", plugin);
         ConfigurationSection regions = bgm.getConfig().getConfigurationSection("bgm.");
 
-        if(!regions.getKeys(false).contains(region)) {
+        if (!regions.getKeys(false).contains(region)) {
             player.sendMessage(ChatColor.RED + "해당 구역은 존재하지 않습니다.");
             return;
         }
@@ -269,6 +269,7 @@ public class RegionBGMGuiEditorObj {
 
     /**
      * 브금을 변경합니다.
+     *
      * @param event AsyncPlayerChatEvent
      */
     public void changeBGM(AsyncPlayerChatEvent event) {
@@ -281,13 +282,41 @@ public class RegionBGMGuiEditorObj {
             Config config = new Config("bgm", plugin);
             ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + changeBgmMap.get(player));
 
+            RegionAPI regionAPI = new RegionAPI(plugin);
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if (regionAPI.getRegion(changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
+                    onlinePlayer.stopSound(section.getString("bgm"));
+
+                    if (section.getBoolean("loop")) Bukkit.getScheduler().cancelTask(taskIdMap.get(changeBgmMap.get(player)).get(onlinePlayer));
+                }
+            }
+
             section.set("bgm", message);
             config.saveConfig();
+
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if (regionAPI.getRegion(changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
+                    if (section.getBoolean("loop")) {
+                        int taskId = new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                onlinePlayer.stopSound(section.getString("bgm"));
+                                onlinePlayer.playSound(onlinePlayer.getLocation(), message,
+                                        Float.parseFloat(section.getDouble("volume") + ""),
+                                        Float.parseFloat(section.getDouble("pitch") + ""));
+                            }
+                        }.runTaskTimerAsynchronously(plugin, 0, section.getInt("length") * 20L).getTaskId();
+                        taskIdMap.get(changeBgmMap.get(player)).put(onlinePlayer, taskId);
+                    }
+                }
+            }
+
 
             changeBgmMap.remove(player);
             guiType.remove(player);
 
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a브금이" + message + "로 변경되었습니다."));
+
 
             if (regionMap.containsKey(player))
                 regionMap.remove(player);
@@ -328,6 +357,7 @@ public class RegionBGMGuiEditorObj {
 
     /**
      * 구역브금 볼륨을 편집합니다
+     *
      * @param event InventoryClickEvent
      */
     public void changeBGMVolume(InventoryClickEvent event) {
@@ -335,27 +365,27 @@ public class RegionBGMGuiEditorObj {
         Config bgm = new Config("bgm", plugin);
         ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + regionMap.get(player));
 
-        if(event.getClick() == ClickType.LEFT) {
+        if (event.getClick() == ClickType.LEFT) {
             section.set("volume", Float.parseFloat(section.getDouble("volume") + 0.1F + ""));
             bgm.saveConfig();
             openBGMEditor(regionMap.get(player));
         } else if (event.getClick() == ClickType.RIGHT) {
 
-            if(section.getDouble("volume") - 0.1F < 0) {
+            if (section.getDouble("volume") - 0.1F < 0) {
                 section.set("volume", 0);
             } else {
                 section.set("volume", Float.parseFloat(section.getDouble("volume") - 0.1F + ""));
             }
             bgm.saveConfig();
             openBGMEditor(regionMap.get(player));
-        } else if(event.getClick() == ClickType.SHIFT_LEFT) {
+        } else if (event.getClick() == ClickType.SHIFT_LEFT) {
 
             section.set("volume", Float.parseFloat(section.getDouble("volume") + 1F + ""));
             bgm.saveConfig();
             openBGMEditor(regionMap.get(player));
         } else if (event.getClick() == ClickType.SHIFT_RIGHT) {
 
-            if(section.getDouble("volume") - 1F < 0) {
+            if (section.getDouble("volume") - 1F < 0) {
                 section.set("volume", 0);
             } else {
                 section.set("volume", Float.parseFloat(section.getDouble("volume") - 1F + ""));
@@ -368,6 +398,7 @@ public class RegionBGMGuiEditorObj {
 
     /**
      * 구역브금 높낮이를 편집합니다
+     *
      * @param event InventoryClickEvent
      */
     public void changeBGMPitch(InventoryClickEvent event) {
@@ -375,27 +406,27 @@ public class RegionBGMGuiEditorObj {
         Config bgm = new Config("bgm", plugin);
         ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + regionMap.get(player));
 
-        if(event.getClick() == ClickType.LEFT) {
+        if (event.getClick() == ClickType.LEFT) {
             section.set("pitch", Float.parseFloat(section.getDouble("pitch") + 0.1F + ""));
             bgm.saveConfig();
             openBGMEditor(regionMap.get(player));
         } else if (event.getClick() == ClickType.RIGHT) {
 
-            if(section.getDouble("pitch") - 0.1F < 0) {
+            if (section.getDouble("pitch") - 0.1F < 0) {
                 section.set("pitch", 0);
             } else {
                 section.set("pitch", Float.parseFloat(section.getDouble("pitch") - 0.1F + ""));
             }
             bgm.saveConfig();
             openBGMEditor(regionMap.get(player));
-        } else if(event.getClick() == ClickType.SHIFT_LEFT) {
+        } else if (event.getClick() == ClickType.SHIFT_LEFT) {
 
             section.set("pitch", Float.parseFloat(section.getDouble("pitch") + 1F + ""));
             bgm.saveConfig();
             openBGMEditor(regionMap.get(player));
         } else if (event.getClick() == ClickType.SHIFT_RIGHT) {
 
-            if(section.getDouble("pitch") - 1F < 0) {
+            if (section.getDouble("pitch") - 1F < 0) {
                 section.set("pitch", 0);
             } else {
                 section.set("pitch", Float.parseFloat(section.getDouble("pitch") - 1F + ""));
@@ -404,7 +435,6 @@ public class RegionBGMGuiEditorObj {
             openBGMEditor(regionMap.get(player));
         }
     }
-
 
 
     /**

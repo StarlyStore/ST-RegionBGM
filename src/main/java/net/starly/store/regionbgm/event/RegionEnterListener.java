@@ -35,8 +35,6 @@ public class RegionEnterListener implements Listener {
         if (section != null) {
             String name = event.getName();
 
-            player.sendMessage("§a[구역브금] §f" + name + " 구역에 들어왔습니다.");
-
             BukkitRunnable task = new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -48,7 +46,7 @@ public class RegionEnterListener implements Listener {
 
             if (config.getBoolean("bgm." + name + ".loop")) {
                 int taskId = task.runTaskTimerAsynchronously(plugin, 0, config.getInt("bgm." + name + ".length") * 20).getTaskId();
-                taskIdMap.put(player, taskId);
+                taskIdMap.get(name).put(player, taskId);
             } else {
                 task.run();
             }

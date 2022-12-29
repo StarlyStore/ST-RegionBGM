@@ -1,6 +1,7 @@
 package net.starly.store.regionbgm.data;
 
 import net.starly.core.data.Config;
+import net.starly.core.data.MessageConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -37,6 +38,7 @@ public class ToggleObj {
 
 
         Config data = new Config("data/" + player.getUniqueId(), plugin);
+
 
         if(!data.getBoolean("toggle")) {
             onToggled(inv);

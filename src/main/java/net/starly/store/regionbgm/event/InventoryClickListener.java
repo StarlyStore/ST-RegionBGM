@@ -64,25 +64,22 @@ public class InventoryClickListener implements Listener {
                 guiType.put(player, GuiEditor.BGM);
                 player.sendMessage("§a변경할 구역브금을 채팅에 입력해주세요.");
                 player.closeInventory();
-
             } else if (slot == config.getInt("edit_gui_settings.length.slot")) {
                 changeBgmMap.put(player, regionMap.get(player));
                 guiType.put(player, GuiEditor.LENGTH);
 
                 player.sendMessage("§a변경할 구역브금 재생시간을 채팅에 입력해주세요.");
                 player.closeInventory();
-
             } else if (slot == config.getInt("edit_gui_settings.volume.slot")) {
                 regionBGMGuiEditorObj.changeBGMVolume(event);
             } else if (slot == config.getInt("edit_gui_settings.pitch.slot")) {
                 regionBGMGuiEditorObj.changeBGMPitch(event);
             } else if (slot == config.getInt("edit_gui_settings.loop.true.slot")) {
                 regionBGMGuiEditorObj.changeBGMLoop();
-
             } else if (slot == config.getInt("edit_gui_settings.loop.false.slot")) {
                 regionBGMGuiEditorObj.changeBGMLoop();
             }
+            event.setCancelled(true);
         }
-        event.setCancelled(true);
     }
 }

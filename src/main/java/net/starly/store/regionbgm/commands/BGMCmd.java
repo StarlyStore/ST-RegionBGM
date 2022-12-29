@@ -45,6 +45,7 @@ public class BGMCmd implements CommandExecutor {
                     bgmEditor.openBGMEditor(region);
                     return true;
                 }
+
             }
         }
         return false;
