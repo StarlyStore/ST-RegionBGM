@@ -109,6 +109,10 @@ public class StringData {
         return getPrefix() + message.getString("errMsg.notExistRegion");
     }
 
+    public String errMsgNoPermission() {
+        return getPrefix() + message.getString("errMsg.noPermission");
+    }
+
 
     public String getPrefix() {
         return message.getString("prefix");

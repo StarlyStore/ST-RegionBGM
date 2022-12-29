@@ -7,7 +7,9 @@ description: RegionBGM Plugin
 version: 1.0.0
 api-version: 1.13
 
-depend: [ST-Region, ST-Core]
+softdepend:
+  - ST-Core
+  - ST-Region
 
 commands:
   bgm:

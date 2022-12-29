@@ -12,11 +12,14 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Logger;
+
 
 public class RegionBGM extends JavaPlugin {
 
 
     public static RegionBGM plugin;
+    private static Logger log = Bukkit.getLogger();
 
 
     @Override
@@ -47,6 +50,20 @@ public class RegionBGM extends JavaPlugin {
      * 플러그인 정보를 로드합니다. (플러그인이 활성화될 때)
      */
     public void init() {
+
+        // DEPENDENCY
+        if(Bukkit.getPluginManager().getPlugin("ST-Core") == null) {
+            log.warning("[" + plugin.getName() + "] ST-Core 플러그인이 적용되지 않았습니다! 플러그인을 비활성화합니다.");
+            log.warning("[" + plugin.getName() + "] 다운로드 링크 : &fhttps://discord.gg/TF8jqSJjCG");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        } else if(Bukkit.getPluginManager().getPlugin("ST-Region") == null) {
+            log.warning("[" + plugin.getName() + "] ST-Region 플러그인이 적용되지 않았습니다! 플러그인을 비활성화합니다.");
+            log.warning("[" + plugin.getName() + "] 다운로드 링크 : &fhttps://discord.gg/TF8jqSJjCG");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+
 
         // EVENT
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
