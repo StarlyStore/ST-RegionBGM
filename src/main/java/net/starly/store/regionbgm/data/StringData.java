@@ -50,6 +50,14 @@ public class StringData {
         return getPrefix() + message.getString("msg.complete_changeBGMLength");
     }
 
+    public String msgCompleteCreate() {
+        return getPrefix() + message.getString("msg.complete_create");
+    }
+
+    public String msgCompleteRemove() {
+        return getPrefix() + message.getString("msg.complete_remove");
+    }
+
     public String errMsgNumberInvalid() {
         return getPrefix() + message.getString("errMsg.numberInvalid");
     }
@@ -64,6 +72,39 @@ public class StringData {
 
     public String errMsgInvalidCommand() {
         return getPrefix() + message.getString("errMsg.invalidCommand");
+    }
+
+
+    public String errMsgCreateTypingRegionName() {
+        return getPrefix() + message.getString("errMsg.create.typingRegionName");
+    }
+
+    public String errMsgCreateTypingBGMName() {
+        return getPrefix() + message.getString("errMsg.create.typingBGMName");
+    }
+
+    public String errMsgCreateTypingLength() {
+        return getPrefix() + message.getString("errMsg.create.typingBGMLength");
+    }
+
+    public String errMsgCreateTypingVolume() {
+        return getPrefix() + message.getString("errMsg.create.typingBGMVolume");
+    }
+
+    public String errMsgCreateTypingPitch() {
+        return getPrefix() + message.getString("errMsg.create.typingBGMPitch");
+    }
+
+    public String errMsgCreateTypingLoop() {
+        return getPrefix() + message.getString("errMsg.create.typingBGMLoop");
+    }
+
+    public String errMsgCreateAlreadyExist() {
+        return getPrefix() + message.getString("errMsg.create.alreadyExist");
+    }
+
+    public String errMsgNotExistRegion() {
+        return getPrefix() + message.getString("errMsg.notExistRegion");
     }
 
 

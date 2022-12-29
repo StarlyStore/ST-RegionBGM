@@ -38,19 +38,18 @@ public class BGMCmd implements CommandExecutor {
 
                 case "생성", "create", "만들기" -> {
 
-
                     if (args.length == 1) {
-                        player.sendMessage("구역 이름을 입력해주세요!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgCreateTypingRegionName()));
                     } else if (args.length == 2) {
-                        player.sendMessage("브금 이름을 입력해주세요!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgCreateTypingBGMName()));
                     } else if (args.length == 3) {
-                        player.sendMessage("브금 재생길이를 입력해주세요!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgCreateTypingLength()));
                     } else if (args.length == 4) {
-                        player.sendMessage("브금 불륨를 입력해주세요!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgCreateTypingVolume()));
                     } else if (args.length == 5) {
-                        player.sendMessage("브금 피치를 입력해주세요!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgCreateTypingPitch()));
                     } else if (args.length == 6) {
-                        player.sendMessage("브금 반복여부를 입력해주세요!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgCreateTypingLoop()));
                     } else {
                         String region = args[1];
                         String bgm = args[2];

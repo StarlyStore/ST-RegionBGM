@@ -1,6 +1,7 @@
 package net.starly.store.regionbgm.data;
 
 import net.starly.core.data.Config;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -42,6 +43,7 @@ public class RegionBGMObj {
         Config config = new Config("bgm", plugin);
         config.loadDefaultConfig();
 
+        StringData stringData = new StringData();
         ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + region);
 
         if (section == null) {
@@ -54,10 +56,11 @@ public class RegionBGMObj {
             section.set("pitch", pitch);
             section.set("loop", loop);
 
-            player.sendMessage("생성 완료!");
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCompleteCreate()
+                    .replace("{region}", region)));
             config.saveConfig();
         } else {
-            player.sendMessage("이미 생성하셨어유 ㅠ");
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.errMsgCreateAlreadyExist()));
         }
     }
 
@@ -70,25 +73,24 @@ public class RegionBGMObj {
     public void removeRegionBGM(String region) {
         Config config = new Config("bgm", plugin);
 
+        StringData stringData = new StringData();
 
         config.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
             ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + key);
 
-            if (region.equals(key)) {
-                player.sendMessage("없는 구역이네요");
-                return;
-            }
+            if(!key.equalsIgnoreCase(region)) {
 
-            if (section != null) {
-                if (key.equals(region)) {
-                    config.getConfig().set("bgm." + key, null);
-                    config.saveConfig();
-                    player.sendMessage("삭제 완료!");
+                if (section != null) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.errMsgNotExistRegion()));
                 }
+            } else {
+                config.getConfig().set("bgm." + key, null);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.msgCompleteRemove()
+                        .replace("{region}", region)));
+                config.saveConfig();
             }
 
         });
-
     }
 
 
@@ -96,17 +98,14 @@ public class RegionBGMObj {
         Config config = new Config("bgm", plugin);
         config.loadDefaultConfig();
 
-        player.sendMessage("§e§l구역브금 목록");
-        player.sendMessage("§e§l====================");
+        player.sendMessage("§8■ §7══════°• §8[ §6구역브금 §f목록 §8] §7•°══════ §8■");
 
         config.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
             ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + key);
 
             if (section != null) {
-                player.sendMessage("§e§l" + key + " §f§l: §e§l" + section.getString("bgm"));
+                player.sendMessage("§8■ §6>> §7" + key + " §8: §f" + section.getString("bgm"));
             }
         });
-
-        player.sendMessage("§e§l====================");
     }
 }

@@ -34,6 +34,12 @@ msg:
   # 재생길이 변경에 성공하였을 때
   complete_changeBGMLength: "&f{region}의 재생길이를 &6{length}&f초로 변경하였습니다!"
 
+  # 구역브금 생성을 성공하였을 때
+  complete_create: "&f구역브금 &6{region}&f을(를) 생성하였습니다!"
+
+  # 구역브금 제거를 성공하였을 때
+  complete_remove: "&f구역브금 &6{region}&f을(를) 제거하였습니다!"
+
 errMsg:
 
   # 브금 | 길이, 불륨, 높낮이를 숫자로 입력하지 않았을 때
@@ -47,3 +53,34 @@ errMsg:
 
   # 올바르지 않은 명령어를 입력하였을 때
   invalidCommand: "&c올바른 명령어를 입력해주세요!"
+
+  # 존재하지 않는 구역일 경우
+  notExistRegion: "&c존재하지 않는 구역입니다!"
+
+  # 구역브금을 생성할 때
+  create:
+
+    # 구역이름을 입력하지 않았을 때
+    typingRegionName: "&c생성하실 구역이름을 입력해주세요!"
+
+    # 브금을 입력하지 않았을 때
+    typingBGMName: "&c브금 이름을 입력해주세요!"
+
+    # 브금 재생길이를 입력하지 않았을 때
+    typingBGMLength: "&c브금 재생길이를 입력해주세요!"
+
+    # 브금 불륨을 입력하지 않았을 때
+    typingBGMVolume: "&c브금 볼륨을 입력해주세요!"
+
+    # 브금 높낮이를 입력하지 않았을 때
+    typingBGMPitch: "&c브금 높낮이를 입력해주세요!"
+
+    # 브금이 반복 여부를 입력하지 않았을 때
+    typingBGMLoop: "&c브금 반복 여부를 입력해주세요! true/false만 입력"
+
+    # 이미 생성된 구역브금을 생성하려고 할 때
+    alreadyExist: "&c이미 생성된 구역브금입니다!"
+
+
+
+
