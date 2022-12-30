@@ -5,10 +5,10 @@
 <a href="https://github.com/StarlyStore">
     <img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
   </a>
-  <a href="https://discord.gg/GAcA9Wmht5">
+  <a href="https://discord.gg/TF8jqSJjCG">
     <img src="https://img.shields.io/badge/-Contact-ed8a6c?style=for-the-badge">
   </a>
-  <a href="https://discord.gg/GAcA9Wmht5">
+  <a href="https://discord.gg/TF8jqSJjCG">
     <img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white">
   </a>
 </p>
@@ -18,8 +18,8 @@
 - 🎵 : 구역브금 플러그인은 구역을 설정하고 구역에 들어갈 브금을 설정할 수 있습니다.
 - 🎵 : 리소스팩에 있는 음악을 불러와 음악을 재생합니다. 
 - 🧲 : 의존성 플러그인: ST-Core, ST-Region
-- ⏬ : 플러그인 다운로드 링크: https://discord.gg/GAcA9Wmht5
-- ⏬ : 예시 리소스팩 다운로드 링크: : https://discord.gg/GAcA9Wmht5
+- ⏬ : 플러그인 다운로드 링크: https://discord.gg/TF8jqSJjCG
+- ⏬ : 예시 리소스팩 다운로드 링크: : https://discord.gg/TF8jqSJjCG
 - 📝 : 제작자: 스탈리 팀 (Starly Team)
 
 
