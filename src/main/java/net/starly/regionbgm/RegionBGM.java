@@ -89,29 +89,31 @@ public class RegionBGM extends JavaPlugin {
 
 
         // PlaySound
-        bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
+        if (bgm.getConfig().getConfigurationSection("bgm") != null) {
+            bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
 
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.hasPermission("regionbgm.bgm." + key)) {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (player.hasPermission("regionbgm.bgm." + key)) {
+                        RegionAPI regionAPI = new RegionAPI(plugin);
 
-                    RegionAPI regionAPI = new RegionAPI(plugin);
+                        regionAPI.getRegions().forEach(rg -> {
+                            regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
+                                RegionMapData.regionMap.put(player, regionAPI.getName(rg));
 
-                    regionAPI.getRegions().forEach(rg -> {
-
-                        regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
-
-                            RegionMapData.regionMap.put(player, regionAPI.getName(rg));
-
-                            player.stopSound(bgm.getConfig().getString("bgm." + regionAPI.getName(rg) + ".bgm"));
-                            playerInRegion.playSound(playerInRegion.getLocation(),
-                                    bgm.getConfig().getString("bgm." + regionAPI.getName(rg) + ".bgm"),
-                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".volume"),
-                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".pitch"));
+                                player.stopSound(bgm.getConfig().getString("bgm." + regionAPI.getName(rg) + ".bgm"));
+                                playerInRegion.playSound(playerInRegion.getLocation(),
+                                        bgm.getConfig().getString("bgm." + regionAPI.getName(rg) + ".bgm"),
+                                        bgm.getFloat("bgm." + regionAPI.getName(rg) + ".volume"),
+                                        bgm.getFloat("bgm." + regionAPI.getName(rg) + ".pitch"));
+                            });
                         });
-                    });
-                    break;
+                        break;
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            bgm.getConfig().createSection("bgm");
+            bgm.saveConfig();
+        }
     }
 }
