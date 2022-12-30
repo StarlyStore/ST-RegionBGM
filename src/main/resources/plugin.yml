@@ -3,8 +3,6 @@ main: net.starly.regionbgm.RegionBGM
 author: Starly Team
 website: https://discord.gg/TF8jqSJjCG
 
-description: RegionBGM Plugin
-
 version: 1.0_Alpha
 api-version: 1.16
 
