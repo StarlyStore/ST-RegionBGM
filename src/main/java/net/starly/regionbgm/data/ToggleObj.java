@@ -1,6 +1,8 @@
 package net.starly.regionbgm.data;
 
 import net.starly.core.data.Config;
+import net.starly.core.data.location.Region;
+import net.starly.region.api.RegionAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -69,12 +71,19 @@ public class ToggleObj {
     private void offToggled(Inventory inv) {
         Config config = new Config("config", plugin);
 
-        String name =  ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("toggled_gui_settings.toggled_off.name"));
+        String name =  ChatColor.translateAlternateColorCodes('&', config.getString("toggled_gui_settings.toggled_off.name"));
         String material = config.getConfig().getString("toggled_gui_settings.toggled_off.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("toggled_gui_settings.toggled_off.lore"));
         int slot = config.getConfig().getInt("toggled_gui_settings.toggled_off.slot");
 
         setItem(inv, name, material, lore, slot);
+
+        RegionAPI regionAPI = new RegionAPI(plugin);
+        for (Region region : regionAPI.getRegions()) {
+            if (region.isInRegion(player)) {
+                player.stopSound(config.getString("bgm." + regionAPI.getName(region) + ".bgm"));
+            }
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package net.starly.regionbgm;
 
+import net.starly.core.bstats.Metrics;
 import net.starly.core.data.Config;
 import net.starly.region.api.RegionAPI;
 import net.starly.regionbgm.data.RegionMapData;
@@ -64,6 +65,7 @@ public class RegionBGM extends JavaPlugin {
             return;
         }
 
+        Metrics metrics = new Metrics(this, 	17241);
 
         // EVENT
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -78,42 +80,32 @@ public class RegionBGM extends JavaPlugin {
         Bukkit.getPluginCommand("regionbgm").setTabCompleter(new BgmTabComplete());
 
         // CONFIG
-        Config config = new Config("config", this);
-        config.loadDefaultPluginConfig();
-
-        Config message = new Config("message", this);
-        message.loadDefaultPluginConfig();
-
         Config bgm = new Config("bgm", this);
-        bgm.loadDefaultConfig();
-
 
         // PlaySound
-        if (bgm.getConfig().getConfigurationSection("bgm") != null) {
-            bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
+        bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
 
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (player.hasPermission("regionbgm.bgm." + key)) {
-                        RegionAPI regionAPI = new RegionAPI(plugin);
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.hasPermission("regionbgm.bgm." + key)) {
 
-                        regionAPI.getRegions().forEach(rg -> {
-                            regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
-                                RegionMapData.regionMap.put(player, regionAPI.getName(rg));
+                    RegionAPI regionAPI = new RegionAPI(plugin);
 
-                                player.stopSound(bgm.getConfig().getString("bgm." + regionAPI.getName(rg) + ".bgm"));
-                                playerInRegion.playSound(playerInRegion.getLocation(),
-                                        bgm.getConfig().getString("bgm." + regionAPI.getName(rg) + ".bgm"),
-                                        bgm.getFloat("bgm." + regionAPI.getName(rg) + ".volume"),
-                                        bgm.getFloat("bgm." + regionAPI.getName(rg) + ".pitch"));
-                            });
+                    regionAPI.getRegions().forEach(rg -> {
+
+                        regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
+
+                            RegionMapData.regionMap.put(player, regionAPI.getName(rg));
+
+                            player.stopSound(bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"));
+                            playerInRegion.playSound(playerInRegion.getLocation(),
+                                    bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"),
+                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".volume"),
+                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".pitch"));
                         });
-                        break;
-                    }
+                    });
+                    break;
                 }
-            });
-        } else {
-            bgm.getConfig().createSection("bgm");
-            bgm.saveConfig();
-        }
+            }
+        });
     }
 }

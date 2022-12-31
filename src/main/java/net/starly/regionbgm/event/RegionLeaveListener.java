@@ -32,7 +32,7 @@ public class RegionLeaveListener implements Listener {
         if (section != null) {
             String name = event.getName();
 
-            player.stopSound(config.getConfig().getString("bgm." + name + ".bgm"));
+            player.stopSound(config.getString("bgm." + name + ".bgm"));
 
             if (!RegionMapData.taskIdMap.containsKey(name + " " + player.getUniqueId())) return;
 
