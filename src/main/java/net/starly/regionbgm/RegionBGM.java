@@ -34,12 +34,11 @@ public class RegionBGM extends JavaPlugin {
     public void onDisable() {
         Config bgm = new Config("bgm", plugin);
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-
+        if (bgm.getConfig().getConfigurationSection("bgm") != null) {
             bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
                 ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + key);
 
-                if (section != null) {
+                for (Player player : Bukkit.getOnlinePlayers()) {
                     player.stopSound(section.getString("bgm"));
                 }
             });
@@ -83,29 +82,31 @@ public class RegionBGM extends JavaPlugin {
         Config bgm = new Config("bgm", this);
 
         // PlaySound
-        bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
+        if (bgm.getConfig().getConfigurationSection("bgm") != null) {
+            bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
 
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.hasPermission("regionbgm.bgm." + key)) {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (player.hasPermission("regionbgm.bgm." + key)) {
 
-                    RegionAPI regionAPI = new RegionAPI(plugin);
+                        RegionAPI regionAPI = new RegionAPI(plugin);
 
-                    regionAPI.getRegions().forEach(rg -> {
+                        regionAPI.getRegions().forEach(rg -> {
 
-                        regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
+                            regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
 
-                            RegionMapData.regionMap.put(player, regionAPI.getName(rg));
+                                RegionMapData.regionMap.put(player, regionAPI.getName(rg));
 
-                            player.stopSound(bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"));
-                            playerInRegion.playSound(playerInRegion.getLocation(),
-                                    bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"),
-                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".volume"),
-                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".pitch"));
+                                player.stopSound(bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"));
+                                playerInRegion.playSound(playerInRegion.getLocation(),
+                                        bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"),
+                                        bgm.getFloat("bgm." + regionAPI.getName(rg) + ".volume"),
+                                        bgm.getFloat("bgm." + regionAPI.getName(rg) + ".pitch"));
+                            });
                         });
-                    });
-                    break;
+                        break;
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

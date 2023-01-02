@@ -80,7 +80,7 @@ public class ToggleObj {
 
         RegionAPI regionAPI = new RegionAPI(plugin);
         for (Region region : regionAPI.getRegions()) {
-            if (region.isInRegion(player)) {
+            if (region.isInRegion(player) && config.getString("bgm." + regionAPI.getName(region) + ".bgm") != null) {
                 player.stopSound(config.getString("bgm." + regionAPI.getName(region) + ".bgm"));
             }
         }
