@@ -50,8 +50,6 @@ public class RegionBGM extends JavaPlugin {
      * 플러그인 정보를 로드합니다. (플러그인이 활성화될 때)
      */
     public void init() {
-
-        // DEPENDENCY
         if(Bukkit.getPluginManager().getPlugin("ST-Core") == null) {
             log.warning("[" + plugin.getName() + "] ST-Core 플러그인이 적용되지 않았습니다! 플러그인을 비활성화합니다.");
             log.warning("[" + plugin.getName() + "] 다운로드 링크 : &fhttps://discord.gg/TF8jqSJjCG");
@@ -64,22 +62,27 @@ public class RegionBGM extends JavaPlugin {
             return;
         }
 
-        Metrics metrics = new Metrics(this, 	17241);
 
-        // EVENT
+        new Metrics(this, 17241);
+
+
+        // CONFIG
+        Config bgm = new Config("bgm", this);
+
+
+        // EVENT LISTENER
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
         Bukkit.getPluginManager().registerEvents(new RegionEnterListener(), this);
         Bukkit.getPluginManager().registerEvents(new RegionLeaveListener(), this);
         Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
 
+
         // COMMAND
         Bukkit.getPluginCommand("bgm").setExecutor(new ToggleCmd());
         Bukkit.getPluginCommand("regionbgm").setExecutor(new BGMCmd());
         Bukkit.getPluginCommand("regionbgm").setTabCompleter(new BgmTabComplete());
 
-        // CONFIG
-        Config bgm = new Config("bgm", this);
 
         // PlaySound
         if (bgm.getConfig().getConfigurationSection("bgm") != null) {
