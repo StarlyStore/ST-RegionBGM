@@ -3,11 +3,11 @@ package net.starly.regionbgm;
 import net.starly.core.bstats.Metrics;
 import net.starly.core.data.Config;
 import net.starly.region.api.RegionAPI;
-import net.starly.regionbgm.data.RegionMapData;
-import net.starly.regionbgm.event.*;
 import net.starly.regionbgm.commands.BGMCmd;
 import net.starly.regionbgm.commands.ToggleCmd;
-import net.starly.regionbgm.commands.tabcomplete.BgmTabComplete;
+import net.starly.regionbgm.commands.tabcomplete.BgmTab;
+import net.starly.regionbgm.data.RegionMapData;
+import net.starly.regionbgm.event.*;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -50,14 +50,14 @@ public class RegionBGM extends JavaPlugin {
      * 플러그인 정보를 로드합니다. (플러그인이 활성화될 때)
      */
     public void init() {
-        if(Bukkit.getPluginManager().getPlugin("ST-Core") == null) {
+        if (Bukkit.getPluginManager().getPlugin("ST-Core") == null) {
             log.warning("[" + plugin.getName() + "] ST-Core 플러그인이 적용되지 않았습니다! 플러그인을 비활성화합니다.");
-            log.warning("[" + plugin.getName() + "] 다운로드 링크 : &fhttps://discord.gg/TF8jqSJjCG");
+            log.warning("[" + plugin.getName() + "] 다운로드 링크 : &fhttp://starly.kr/discord");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
-        } else if(Bukkit.getPluginManager().getPlugin("ST-Region") == null) {
+        } else if (Bukkit.getPluginManager().getPlugin("ST-Region") == null) {
             log.warning("[" + plugin.getName() + "] ST-Region 플러그인이 적용되지 않았습니다! 플러그인을 비활성화합니다.");
-            log.warning("[" + plugin.getName() + "] 다운로드 링크 : &fhttps://discord.gg/TF8jqSJjCG");
+            log.warning("[" + plugin.getName() + "] 다운로드 링크 : &fhttp://starly.kr/discord");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
@@ -81,7 +81,7 @@ public class RegionBGM extends JavaPlugin {
         // COMMAND
         Bukkit.getPluginCommand("bgm").setExecutor(new ToggleCmd());
         Bukkit.getPluginCommand("regionbgm").setExecutor(new BGMCmd());
-        Bukkit.getPluginCommand("regionbgm").setTabCompleter(new BgmTabComplete());
+        Bukkit.getPluginCommand("regionbgm").setTabCompleter(new BgmTab());
 
 
         // PlaySound
@@ -89,25 +89,22 @@ public class RegionBGM extends JavaPlugin {
             bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
 
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (player.hasPermission("regionbgm.bgm." + key)) {
+                    RegionAPI regionAPI = new RegionAPI(plugin);
 
-                        RegionAPI regionAPI = new RegionAPI(plugin);
+                    regionAPI.getRegions().forEach(rg -> {
 
-                        regionAPI.getRegions().forEach(rg -> {
+                        regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
 
-                            regionAPI.getPlayersInRegion(rg).forEach(playerInRegion -> {
+                            RegionMapData.regionMap.put(player, regionAPI.getName(rg));
 
-                                RegionMapData.regionMap.put(player, regionAPI.getName(rg));
-
-                                player.stopSound(bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"));
-                                playerInRegion.playSound(playerInRegion.getLocation(),
-                                        bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"),
-                                        bgm.getFloat("bgm." + regionAPI.getName(rg) + ".volume"),
-                                        bgm.getFloat("bgm." + regionAPI.getName(rg) + ".pitch"));
-                            });
+                            player.stopSound(bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"));
+                            playerInRegion.playSound(playerInRegion.getLocation(),
+                                    bgm.getString("bgm." + regionAPI.getName(rg) + ".bgm"),
+                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".volume"),
+                                    bgm.getFloat("bgm." + regionAPI.getName(rg) + ".pitch"));
                         });
-                        break;
-                    }
+                    });
+                    break;
                 }
             });
         }

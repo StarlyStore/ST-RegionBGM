@@ -1,12 +1,12 @@
 name: ST-RegionBGM
 main: net.starly.regionbgm.RegionBGM
 author: Starly Team
-website: https://discord.gg/TF8jqSJjCG
+website: http://starly.kr/discord
 
 description: RegionBGM Plugin.
 
-version: 1.0.2
-api-version: 1.16
+version: 1.0.3
+api-version: 1.13
 
 softdepend:
   - ST-Core
@@ -14,6 +14,6 @@ softdepend:
 
 commands:
   bgm:
-    aliases: [브금]
+    aliases: [ 브금 ]
   regionbgm:
-    aliases: [구역브금]
+    aliases: [ rbgm, 구역브금 ]

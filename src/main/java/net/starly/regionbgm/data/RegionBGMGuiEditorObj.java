@@ -288,7 +288,7 @@ public class RegionBGMGuiEditorObj {
                 Config config = new Config("bgm", RegionBGM.plugin);
                 ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + RegionMapData.changeBgmMap.get(player));
 
-                RegionAPI regionAPI = new RegionAPI(RegionBGM.plugin);
+                RegionAPI regionAPI = new RegionAPI();
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (regionAPI.getRegion(RegionMapData.changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
                         onlinePlayer.stopSound(section.getString("bgm"));

@@ -15,20 +15,22 @@ public class ToggleCmd implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
+        if (sender instanceof Player) return true;
+        Player player = (Player) sender;
 
-        if(sender instanceof Player player) {
-
-            if(player.hasPermission("starly.regionbgm.toggle")) {
-                if (args.length == 0) {
-                    ToggleObj toggleObj = new ToggleObj(player);
-                    toggleObj.toggleGUI();
-                    return true;
-                }
-            } else {
-                StringData message = new StringData();
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgNoPermission()));
-            }
+        StringData message = new StringData();
+        if (!player.hasPermission("starly.regionbgm.toggle")) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgNoPermission()));
+            return true;
         }
+
+        if (args.length == 0) {
+            ToggleObj toggleObj = new ToggleObj(player);
+            toggleObj.toggleGUI();
+            return true;
+        }
+
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message.errMsgInvalidCommand()));
         return false;
     }
 }
