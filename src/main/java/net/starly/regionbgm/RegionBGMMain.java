@@ -16,40 +16,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Logger;
 
 
-public class RegionBGM extends JavaPlugin {
-
-
-    public static RegionBGM plugin;
-    private static Logger log = Bukkit.getLogger();
+public class RegionBGMMain extends JavaPlugin {
+    private static RegionBGMMain plugin;
+    private static final Logger log = Bukkit.getLogger();
 
 
     @Override
     public void onEnable() {
-        plugin = this;
-        init();
-    }
-
-
-    @Override
-    public void onDisable() {
-        Config bgm = new Config("bgm", plugin);
-
-        if (bgm.getConfig().getConfigurationSection("bgm") != null) {
-            bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
-                ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + key);
-
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.stopSound(section.getString("bgm"));
-                }
-            });
-        }
-    }
-
-
-    /**
-     * 플러그인 정보를 로드합니다. (플러그인이 활성화될 때)
-     */
-    public void init() {
+        // DEPENDENCY
         if (Bukkit.getPluginManager().getPlugin("ST-Core") == null) {
             log.warning("[" + plugin.getName() + "] ST-Core 플러그인이 적용되지 않았습니다! 플러그인을 비활성화합니다.");
             log.warning("[" + plugin.getName() + "] 다운로드 링크 : &fhttp://starly.kr/discord");
@@ -62,34 +36,30 @@ public class RegionBGM extends JavaPlugin {
             return;
         }
 
-
+        plugin = this;
         new Metrics(this, 17241);
-
 
         // CONFIG
         Config bgm = new Config("bgm", this);
 
-
-        // EVENT LISTENER
+        // EVENT
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
         Bukkit.getPluginManager().registerEvents(new RegionEnterListener(), this);
         Bukkit.getPluginManager().registerEvents(new RegionLeaveListener(), this);
         Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
 
-
         // COMMAND
         Bukkit.getPluginCommand("bgm").setExecutor(new ToggleCmd());
         Bukkit.getPluginCommand("regionbgm").setExecutor(new BGMCmd());
         Bukkit.getPluginCommand("regionbgm").setTabCompleter(new BgmTab());
 
-
-        // PlaySound
+        // PLAY_SOUND
         if (bgm.getConfig().getConfigurationSection("bgm") != null) {
             bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
 
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    RegionAPI regionAPI = new RegionAPI(plugin);
+                    RegionAPI regionAPI = new RegionAPI(RegionBGMMain.getPlugin());
 
                     regionAPI.getRegions().forEach(rg -> {
 
@@ -108,5 +78,25 @@ public class RegionBGM extends JavaPlugin {
                 }
             });
         }
+    }
+
+
+    @Override
+    public void onDisable() {
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
+
+        if (bgm.getConfig().getConfigurationSection("bgm") != null) {
+            bgm.getConfig().getConfigurationSection("bgm").getKeys(false).forEach(key -> {
+                ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + key);
+
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.stopSound(section.getString("bgm"));
+                }
+            });
+        }
+    }
+
+    public static RegionBGMMain getPlugin() {
+        return plugin;
     }
 }

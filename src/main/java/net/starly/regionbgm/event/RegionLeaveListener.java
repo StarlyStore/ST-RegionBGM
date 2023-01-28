@@ -2,6 +2,7 @@ package net.starly.regionbgm.event;
 
 import net.starly.core.data.Config;
 import net.starly.region.events.RegionLeaveEvent;
+import net.starly.regionbgm.RegionBGMMain;
 import net.starly.regionbgm.data.RegionMapData;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -9,8 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
-
-import static net.starly.regionbgm.RegionBGM.plugin;
 
 public class RegionLeaveListener implements Listener {
 
@@ -24,7 +23,7 @@ public class RegionLeaveListener implements Listener {
     public void leaveRegion(@NotNull RegionLeaveEvent event) {
         Player player = event.getPlayer();
 
-        Config config = new Config("bgm", plugin);
+        Config config = new Config("bgm", RegionBGMMain.getPlugin());
         config.loadDefaultConfig();
         ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + event.getName());
 

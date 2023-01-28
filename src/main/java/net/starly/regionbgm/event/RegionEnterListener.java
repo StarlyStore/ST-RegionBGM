@@ -2,7 +2,7 @@ package net.starly.regionbgm.event;
 
 import net.starly.core.data.Config;
 import net.starly.region.events.RegionEnterEvent;
-import net.starly.regionbgm.RegionBGM;
+import net.starly.regionbgm.RegionBGMMain;
 import net.starly.regionbgm.data.RegionMapData;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -23,11 +23,11 @@ public class RegionEnterListener implements Listener {
     @EventHandler
     public void onEntered(@NotNull RegionEnterEvent event) {
         Player player = event.getPlayer();
-        Config data = new Config("data/" + player.getUniqueId(), RegionBGM.plugin);
+        Config data = new Config("data/" + player.getUniqueId(), RegionBGMMain.getPlugin());
         data.loadDefaultConfig();
         if (!data.getBoolean("toggle")) return;
 
-        Config config = new Config("bgm", RegionBGM.plugin);
+        Config config = new Config("bgm", RegionBGMMain.getPlugin());
         config.loadDefaultConfig(); //loadDefaultConfig -> 파일 불러옴. loadDefaultPluginConfig -> 플러그인 파일 없으면 저장하고 불러옴.
         ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + event.getName());
 
@@ -46,11 +46,11 @@ public class RegionEnterListener implements Listener {
 
             if (config.getBoolean("bgm." + name + ".loop")) {
 
-                int taskId = task.runTaskTimerAsynchronously(RegionBGM.plugin, 0, config.getInt("bgm." + name + ".length") * 20).getTaskId();
+                int taskId = task.runTaskTimerAsynchronously(RegionBGMMain.getPlugin(), 0, config.getInt("bgm." + name + ".length") * 20).getTaskId();
                 RegionMapData.taskIdMap.put(name + " " + player.getUniqueId(), taskId);
 
             } else {
-                task.runTaskAsynchronously(RegionBGM.plugin);
+                task.runTaskAsynchronously(RegionBGMMain.getPlugin());
             }
         }
     }

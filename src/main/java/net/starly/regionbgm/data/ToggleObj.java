@@ -3,6 +3,7 @@ package net.starly.regionbgm.data;
 import net.starly.core.data.Config;
 import net.starly.core.data.location.Region;
 import net.starly.region.api.RegionAPI;
+import net.starly.regionbgm.RegionBGMMain;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,8 +14,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-import static net.starly.regionbgm.RegionBGM.plugin;
 
 public class ToggleObj {
 
@@ -32,13 +31,13 @@ public class ToggleObj {
      * 토글 GUI를 엽니다.
      */
     public void toggleGUI() {
-        Config toggled = new Config("config", plugin);
+        Config toggled = new Config("config", RegionBGMMain.getPlugin());
 
         Inventory inv = Bukkit.createInventory(null,
                 toggled.getConfig().getInt("toggled_gui_settings.size") * 9, toggled.getConfig().getString("toggled_gui_settings.title"));
 
 
-        Config data = new Config("data/" + player.getUniqueId(), plugin);
+        Config data = new Config("data/" + player.getUniqueId(), RegionBGMMain.getPlugin());
 
 
         if(!data.getBoolean("toggle")) {
@@ -54,7 +53,7 @@ public class ToggleObj {
      * 플레이어의 토글이 켜져있을 때
      */
     private void onToggled(Inventory inv) {
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("toggled_gui_settings.toggled_on.name"));
         String material = config.getConfig().getString("toggled_gui_settings.toggled_on.material");
@@ -69,7 +68,7 @@ public class ToggleObj {
      * 플레이어의 토글이 꺼져있을 때
      */
     private void offToggled(Inventory inv) {
-        Config config = new Config("config", plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
 
         String name =  ChatColor.translateAlternateColorCodes('&', config.getString("toggled_gui_settings.toggled_off.name"));
         String material = config.getConfig().getString("toggled_gui_settings.toggled_off.material");
@@ -78,7 +77,7 @@ public class ToggleObj {
 
         setItem(inv, name, material, lore, slot);
 
-        RegionAPI regionAPI = new RegionAPI(plugin);
+        RegionAPI regionAPI = new RegionAPI(RegionBGMMain.getPlugin());
         for (Region region : regionAPI.getRegions()) {
             if (region.isInRegion(player) && config.getString("bgm." + regionAPI.getName(region) + ".bgm") != null) {
                 player.stopSound(config.getString("bgm." + regionAPI.getName(region) + ".bgm"));

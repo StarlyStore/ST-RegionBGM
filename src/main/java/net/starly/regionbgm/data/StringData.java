@@ -1,12 +1,12 @@
 package net.starly.regionbgm.data;
 
 import net.starly.core.data.Config;
-import net.starly.regionbgm.RegionBGM;
+import net.starly.regionbgm.RegionBGMMain;
 import org.bukkit.entity.Player;
 
 public class StringData {
 
-    private Config message = new Config("message", RegionBGM.plugin);
+    private Config message = new Config("message", RegionBGMMain.getPlugin());
 
 
     public String msgHelp(Player player) {

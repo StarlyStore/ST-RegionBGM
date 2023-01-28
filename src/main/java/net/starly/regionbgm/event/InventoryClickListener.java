@@ -1,7 +1,7 @@
 package net.starly.regionbgm.event;
 
 import net.starly.core.data.Config;
-import net.starly.regionbgm.RegionBGM;
+import net.starly.regionbgm.RegionBGMMain;
 import net.starly.regionbgm.data.GuiEditor;
 import net.starly.regionbgm.data.RegionMapData;
 import net.starly.regionbgm.data.RegionBGMGuiEditorObj;
@@ -26,13 +26,13 @@ public class InventoryClickListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         int slot = event.getSlot();
 
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
         if (event.getView().getTitle().equals(config.getString("toggled_gui_settings.title"))) {
             if (slot == config.getInt("toggled_gui_settings.toggled_on.slot")) {
                 event.setCancelled(true);
                 player.closeInventory();
 
-                Config data = new Config("data/" + player.getUniqueId(), RegionBGM.plugin);
+                Config data = new Config("data/" + player.getUniqueId(), RegionBGMMain.getPlugin());
                 StringData stringData = new StringData();
 
                 if (data.getBoolean("toggle")) {
@@ -61,7 +61,7 @@ public class InventoryClickListener implements Listener {
         RegionBGMGuiEditorObj regionBGMGuiEditorObj = new RegionBGMGuiEditorObj(player);
         StringData stringData = new StringData();
 
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
         if (event.getView().getTitle().equals(config.getString("edit_gui_settings.title"))) {
 
             if (slot == config.getInt("edit_gui_settings.bgmName.slot")) {

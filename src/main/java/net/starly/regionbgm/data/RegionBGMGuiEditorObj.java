@@ -3,7 +3,7 @@ package net.starly.regionbgm.data;
 import net.starly.core.data.Config;
 import net.starly.core.data.util.Tuple;
 import net.starly.region.api.RegionAPI;
-import net.starly.regionbgm.RegionBGM;
+import net.starly.regionbgm.RegionBGMMain;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,7 +38,7 @@ public class RegionBGMGuiEditorObj {
     public void openBGMEditor(String region) {
 
 
-        Config bgm = new Config("bgm", RegionBGM.plugin);
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
         ConfigurationSection regions = bgm.getConfig().getConfigurationSection("bgm.");
 
         if (!regions.getKeys(false).contains(region)) {
@@ -46,7 +46,7 @@ public class RegionBGMGuiEditorObj {
             return;
         }
 
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
         Inventory inv = Bukkit.createInventory(null,
                 config.getConfig().getInt("edit_gui_settings.size") * 9,
                 config.getConfig().getString("edit_gui_settings.title"));
@@ -76,11 +76,11 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void bgmNameEditor(@NotNull Inventory inv, String bgmName) {
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.bgmName.name"));
         String material = config.getConfig().getString("edit_gui_settings.bgmName.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.bgmName.lore"));
-        Config bgm = new Config("bgm", RegionBGM.plugin);
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
         lore.replaceAll(s -> s.replace("{bgm}", bgm.getString("bgm." + bgmName + ".bgm")));
         int slot = config.getConfig().getInt("edit_gui_settings.bgmName.slot");
 
@@ -100,12 +100,12 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void statusEditor(Inventory inv) {
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.status.name").replace("{region}", RegionMapData.regionMap.get(player)));
         String material = config.getConfig().getString("edit_gui_settings.status.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.status.lore"));
-        Config bgm = new Config("bgm", RegionBGM.plugin);
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
         lore.replaceAll(s -> s.replace("{bgm}", bgm.getString("bgm." + RegionMapData.regionMap.get(player) + ".bgm"))
                 .replace("{length}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".length")))
                 .replace("{volume}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".volume")))
@@ -130,12 +130,12 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void lengthEditor(Inventory inv) {
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.length.name"));
         String material = config.getConfig().getString("edit_gui_settings.length.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.length.lore"));
-        Config bgm = new Config("bgm", RegionBGM.plugin);
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
         lore.replaceAll(s -> s.replace("{length}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".length"))));
         int slot = config.getConfig().getInt("edit_gui_settings.length.slot");
 
@@ -155,12 +155,12 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void volumeEditor(Inventory inv) {
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.volume.name"));
         String material = config.getConfig().getString("edit_gui_settings.volume.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.volume.lore"));
-        Config bgm = new Config("bgm", RegionBGM.plugin);
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
         lore.replaceAll(s -> s.replace("{volume}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".volume"))));
         int slot = config.getConfig().getInt("edit_gui_settings.volume.slot");
 
@@ -180,12 +180,12 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void pitchEditor(Inventory inv) {
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.pitch.name"));
         String material = config.getConfig().getString("edit_gui_settings.pitch.material");
         List<String> lore = Translate.color(config.getConfig().getStringList("edit_gui_settings.pitch.lore"));
-        Config bgm = new Config("bgm", RegionBGM.plugin);
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
         lore.replaceAll(s -> s.replace("{pitch}", String.valueOf(bgm.getConfig().getDouble("bgm." + RegionMapData.regionMap.get(player) + ".pitch"))));
         int slot = config.getConfig().getInt("edit_gui_settings.pitch.slot");
 
@@ -205,7 +205,7 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void loopTrueEditor(Inventory inv) {
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.loop.true.name"));
         String material = config.getConfig().getString("edit_gui_settings.loop.true.material");
@@ -228,7 +228,7 @@ public class RegionBGMGuiEditorObj {
      * @param inv 편집기 인벤토리
      */
     private void loopFalseEditor(Inventory inv) {
-        Config config = new Config("config", RegionBGM.plugin);
+        Config config = new Config("config", RegionBGMMain.getPlugin());
 
         String name = ChatColor.translateAlternateColorCodes('&', config.getConfig().getString("edit_gui_settings.loop.false.name"));
         String material = config.getConfig().getString("edit_gui_settings.loop.false.material");
@@ -285,10 +285,10 @@ public class RegionBGMGuiEditorObj {
             } else {
 
 
-                Config config = new Config("bgm", RegionBGM.plugin);
+                Config config = new Config("bgm", RegionBGMMain.getPlugin());
                 ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + RegionMapData.changeBgmMap.get(player));
 
-                RegionAPI regionAPI = new RegionAPI();
+                RegionAPI regionAPI = new RegionAPI(RegionBGMMain.getPlugin());
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (regionAPI.getRegion(RegionMapData.changeBgmMap.get(player)).contains(onlinePlayer.getLocation())) {
                         onlinePlayer.stopSound(section.getString("bgm"));
@@ -314,7 +314,7 @@ public class RegionBGMGuiEditorObj {
                                             Float.parseFloat(section.getDouble("volume") + ""),
                                             Float.parseFloat(section.getDouble("pitch") + ""));
                                 }
-                            }.runTaskTimerAsynchronously(RegionBGM.plugin, 0, section.getInt("length") * 20L).getTaskId();
+                            }.runTaskTimerAsynchronously(RegionBGMMain.getPlugin(), 0, section.getInt("length") * 20L).getTaskId();
                             RegionMapData.taskIdMap.put(name + " " + onlinePlayer.getUniqueId(), taskId);
                             System.out.println(Tuple.of(name, onlinePlayer.getName()) + " " + taskId);
                         }
@@ -359,7 +359,7 @@ public class RegionBGMGuiEditorObj {
 
 
                 try {
-                    Config config = new Config("bgm", RegionBGM.plugin);
+                    Config config = new Config("bgm", RegionBGMMain.getPlugin());
                     ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + RegionMapData.changeBgmMap.get(player));
 
                     section.set("length", Integer.parseInt(message));
@@ -390,7 +390,7 @@ public class RegionBGMGuiEditorObj {
      */
     public void changeBGMVolume(@NotNull InventoryClickEvent event) {
 
-        Config bgm = new Config("bgm", RegionBGM.plugin);
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
         ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + RegionMapData.regionMap.get(player));
 
         if (event.getClick() == ClickType.LEFT) {
@@ -431,7 +431,7 @@ public class RegionBGMGuiEditorObj {
      */
     public void changeBGMPitch(@NotNull InventoryClickEvent event) {
 
-        Config bgm = new Config("bgm", RegionBGM.plugin);
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
         ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + RegionMapData.regionMap.get(player));
 
         if (event.getClick() == ClickType.LEFT) {
@@ -470,7 +470,7 @@ public class RegionBGMGuiEditorObj {
      */
     public void changeBGMLoop() {
 
-        Config bgm = new Config("bgm", RegionBGM.plugin);
+        Config bgm = new Config("bgm", RegionBGMMain.getPlugin());
         ConfigurationSection section = bgm.getConfig().getConfigurationSection("bgm." + RegionMapData.regionMap.get(player));
 
         if (section.getBoolean("loop")) {

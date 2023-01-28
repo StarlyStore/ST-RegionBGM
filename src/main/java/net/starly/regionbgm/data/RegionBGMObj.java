@@ -1,14 +1,11 @@
 package net.starly.regionbgm.data;
 
 import net.starly.core.data.Config;
-import net.starly.core.data.location.Region;
 import net.starly.region.api.RegionAPI;
-import net.starly.regionbgm.RegionBGM;
+import net.starly.regionbgm.RegionBGMMain;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-
-import static net.starly.regionbgm.RegionBGM.plugin;
 
 public class RegionBGMObj {
 
@@ -24,7 +21,7 @@ public class RegionBGMObj {
      * 플레이어의 토글 정보를 생성합니다.
      */
     public void createPlayerData() {
-        Config data = new Config("data/" + player.getUniqueId(), plugin);
+        Config data = new Config("data/" + player.getUniqueId(), RegionBGMMain.getPlugin());
 
         if (!data.isFileExist()) {
             data.setBoolean("toggle", true);
@@ -43,13 +40,13 @@ public class RegionBGMObj {
      * @param loop    브금 반복 여부
      */
     public void createRegionBGM(String region, String bgmName, Integer length, Integer volume, Integer pitch, Boolean loop) {
-        Config config = new Config("bgm", plugin);
+        Config config = new Config("bgm", RegionBGMMain.getPlugin());
         config.loadDefaultConfig();
 
         StringData stringData = new StringData();
         ConfigurationSection section = config.getConfig().getConfigurationSection("bgm." + region);
 
-        RegionAPI regionAPI = new RegionAPI(plugin);
+        RegionAPI regionAPI = new RegionAPI(RegionBGMMain.getPlugin());
         if (regionAPI.getRegion(region) == null) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', stringData.errMsgCreateNoExistRegion()));
             return;
@@ -81,7 +78,7 @@ public class RegionBGMObj {
      * @param region 구역 이름
      */
     public void removeRegionBGM(String region) {
-        Config config = new Config("bgm", plugin);
+        Config config = new Config("bgm", RegionBGMMain.getPlugin());
 
         StringData stringData = new StringData();
 
@@ -100,7 +97,7 @@ public class RegionBGMObj {
 
 
     public void showRegionBGMList() {
-        Config config = new Config("bgm", plugin);
+        Config config = new Config("bgm", RegionBGMMain.getPlugin());
         config.loadDefaultConfig();
 
         player.sendMessage("§8■ §7══════°• §8[ §6구역브금 §f목록 §8] §7•°══════ §8■");
