@@ -25,7 +25,7 @@ public class BgmTab implements TabCompleter {
             StringUtil.copyPartialMatches(args[0], Arrays.asList("생성", "편집", "제거", "도움말", "목록"), completions);
         } else if (args.length == 2) {
             if (args[0].equals("생성")) {
-                completions.addAll(new RegionAPI(RegionBGMMain.getPlugin()).getRegionMap().keySet());
+                completions.addAll(new RegionAPI().getRegionMap().keySet());
             } else if (args[0].equals("편집")) {
                 ConfigurationSection regions = new Config("bgm", RegionBGMMain.getPlugin()).getConfigurationSection("bgm");
                 if (regions != null) completions.addAll(regions.getKeys(false));

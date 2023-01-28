@@ -77,7 +77,7 @@ public class ToggleObj {
 
         setItem(inv, name, material, lore, slot);
 
-        RegionAPI regionAPI = new RegionAPI(RegionBGMMain.getPlugin());
+        RegionAPI regionAPI = new RegionAPI();
         for (Region region : regionAPI.getRegions()) {
             if (region.isInRegion(player) && config.getString("bgm." + regionAPI.getName(region) + ".bgm") != null) {
                 player.stopSound(config.getString("bgm." + regionAPI.getName(region) + ".bgm"));
