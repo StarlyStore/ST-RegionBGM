@@ -1,5 +1,5 @@
-name: ST-RegionBGMMain
-main: net.starly.regionbgm.RegionBGM
+name: ST-RegionBGM
+main: net.starly.regionbgm.RegionBGMMain
 author: Starly Team
 website: http://starly.kr/discord
 
